@@ -6,8 +6,6 @@ struct InstockcookApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentViewAddQuantity()
-
         }
     }
 }
