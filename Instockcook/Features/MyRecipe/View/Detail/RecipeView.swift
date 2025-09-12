@@ -17,16 +17,14 @@ struct RecipeView: View {
                     DescResepModal(recipes: recipes)
                 }
             }
-            .navigationTitle("Recipes")
             
         }
     }
 }
-
-
 
 struct RecipeView_Previews: PreviewProvider {
     static var previews: some View {
         RecipeView(recipes: Recipe.all)
     }
 }
+
