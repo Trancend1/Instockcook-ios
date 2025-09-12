@@ -3,11 +3,29 @@ import Foundation
 struct Recipe: Identifiable {
     let id: UUID = UUID()
     let title: String
-    let image: String?
+    let image: String
     let description: String
     let ingredients: String
     let tools: String
     let steps: String
+    
+    var parsedIngredients: [(name: String, quantity: String)] {
+            ingredients.split(separator: ",").compactMap { item in
+                let parts = item.trimmingCharacters(in: .whitespaces).split(separator: " ")
+                
+                if parts.count >= 3 {
+                    let quantity = parts.prefix(2).joined(separator: " ")
+                    let name = parts.dropFirst(2).joined(separator: " ")
+                    return (name: name, quantity: quantity)
+                } else if parts.count == 2 {
+                    let quantity = String(parts[0])
+                    let name = String(parts[1])
+                    return (name: name, quantity: quantity)
+                } else {
+                    return (name: String(item), quantity: "")
+                }
+            }
+        }
 }
 
 extension Recipe {
@@ -19,12 +37,12 @@ extension Recipe {
             ingredients: "500 gr nasi putih, 4 siung bawang merah, 3 siung bawang putih, 5 buah cabai rawit, 1 butir telur, 2 sdm kecap manis, 1/2 sdt garam, 1/4 sdt lada.",
             tools: "Wajan, spatula, pisau, cobek/ulekan.",
             steps: """
-                    1. Haluskan bawang merah, bawang putih, dan cabai rawit dengan cobek.
-                    2. Panaskan wajan dengan sedikit minyak, tumis bumbu halus hingga harum.
-                    3. Masukkan telur, orak-arik hingga matang.
-                    4. Masukkan nasi putih, aduk rata.
-                    5. Tambahkan kecap manis, garam, dan lada. Aduk hingga nasi terbalut bumbu dengan sempurna.
-                    6. Sajikan selagi hangat.
+                    Haluskan bawang merah, bawang putih, dan cabai rawit dengan cobek.
+                    Panaskan wajan dengan sedikit minyak, tumis bumbu halus hingga harum.
+                    Masukkan telur, orak-arik hingga matang.
+                    Masukkan nasi putih, aduk rata.
+                    Tambahkan kecap manis, garam, dan lada. Aduk hingga nasi terbalut bumbu dengan sempurna.
+                    Sajikan selagi hangat.
                     """
         ),
         Recipe(
@@ -34,11 +52,11 @@ extension Recipe {
             ingredients: "500 gr ayam, 2 batang serai, 3 lembar daun jeruk, 1 ruas kunyit, 6 siung bawang merah, 4 siung bawang putih, 3 butir kemiri, 1/2 sdt jintan, 1 sdt ketumbar, 100 gr kol, 50 gr soun, 2 butir telur rebus, 1 batang seledri, 5 sdm koya.",
             tools: "Panci, wajan, saringan, cobek/blender, mangkuk.",
             steps: """
-                    1. Rebus ayam hingga matang, ambil kaldu dan suwir dagingnya.
-                    2. Haluskan bumbu (bawang merah, bawang putih, kemiri, kunyit, jintan, ketumbar), tumis hingga harum.
-                    3. Masukkan bumbu tumis ke dalam kaldu ayam, tambahkan serai dan daun jeruk. Masak hingga mendidih.
-                    4. Tata soun, kol iris, dan ayam suwir di mangkuk.
-                    5. Siram dengan kuah soto panas dan taburi dengan seledri serta koya.
+                    Rebus ayam hingga matang, ambil kaldu dan suwir dagingnya.
+                    Haluskan bumbu (bawang merah, bawang putih, kemiri, kunyit, jintan, ketumbar), tumis hingga harum.
+                    Masukkan bumbu tumis ke dalam kaldu ayam, tambahkan serai dan daun jeruk. Masak hingga mendidih.
+                    Tata soun, kol iris, dan ayam suwir di mangkuk.
+                    Siram dengan kuah soto panas dan taburi dengan seledri serta koya.
                     """
         ),
         Recipe(
@@ -48,10 +66,10 @@ extension Recipe {
             ingredients: "1 kg daging sapi, 1 liter santan, 10 buah cabai merah, 10 siung bawang merah, 5 siung bawang putih, 2 ruas jahe, 2 ruas lengkuas, 2 batang serai, 2 lembar daun kunyit, 3 lembar daun jeruk, 1 sdm garam.",
             tools: "Wajan besar/panci, cobek/blender.",
             steps: """
-                    1. Haluskan semua bumbu (kecuali daun kunyit, daun jeruk, serai, lengkuas).
-                    2. Masukkan daging sapi, santan, dan bumbu halus ke dalam wajan. Aduk rata.
-                    3. Tambahkan serai, daun kunyit, daun jeruk, dan lengkuas. Masak dengan api kecil sambil sesekali diaduk.
-                    4. Terus masak hingga santan mengering, bumbu meresap, dan rendang berwarna cokelat kehitaman.
+                    Haluskan semua bumbu (kecuali daun kunyit, daun jeruk, serai, lengkuas).
+                    Masukkan daging sapi, santan, dan bumbu halus ke dalam wajan. Aduk rata.
+                    Tambahkan serai, daun kunyit, daun jeruk, dan lengkuas. Masak dengan api kecil sambil sesekali diaduk.
+                    Terus masak hingga santan mengering, bumbu meresap, dan rendang berwarna cokelat kehitaman.
                     """
         ),
         Recipe(
@@ -61,10 +79,10 @@ extension Recipe {
             ingredients: "500 gr daging kambing, 400 ml santan kental, 8 siung bawang merah, 5 siung bawang putih, 1 ruas kunyit, 1 ruas jahe, 1 sdt ketumbar, 1/2 sdt jintan, 3 butir cengkeh, 1 batang kayu manis, 1 batang serai, 2 lembar daun salam.",
             tools: "Panci, wajan, spatula, cobek/blender.",
             steps: """
-                    1. Rebus daging kambing hingga empuk, buang air rebusan pertama untuk mengurangi bau.
-                    2. Tumis bumbu halus (bawang merah, bawang putih, kunyit, jahe, ketumbar, jintan) hingga harum.
-                    3. Masukkan bumbu tumis ke dalam panci berisi santan. Tambahkan serai, daun salam, cengkeh, dan kayu manis.
-                    4. Masukkan daging kambing yang sudah direbus, masak hingga bumbu meresap dan kuah mengental.
+                    Rebus daging kambing hingga empuk, buang air rebusan pertama untuk mengurangi bau.
+                    Tumis bumbu halus (bawang merah, bawang putih, kunyit, jahe, ketumbar, jintan) hingga harum.
+                    Masukkan bumbu tumis ke dalam panci berisi santan. Tambahkan serai, daun salam, cengkeh, dan kayu manis.
+                    Masukkan daging kambing yang sudah direbus, masak hingga bumbu meresap dan kuah mengental.
                     """
         ),
         Recipe(
@@ -74,11 +92,11 @@ extension Recipe {
             ingredients: "1/2 buah labu siam, 1 buah terong, 10 batang kacang panjang, 50 gr melinjo, 1 buah jagung manis, 500 ml santan, 5 siung bawang merah, 3 siung bawang putih, 3 buah cabai, 2 lembar daun salam, 1 ruas lengkuas.",
             tools: "Panci, pisau, spatula.",
             steps: """
-                    1. Potong-potong semua sayuran.
-                    2. Didihkan santan, masukkan bumbu iris (bawang merah, bawang putih, cabai) serta daun salam dan lengkuas.
-                    3. Masukkan sayuran yang keras terlebih dahulu (jagung, melinjo), masak hingga setengah matang.
-                    4. Masukkan sisa sayuran (labu siam, terong, kacang panjang).
-                    5. Masak hingga semua sayuran matang, tambahkan garam dan gula secukupnya.
+                    Potong-potong semua sayuran.
+                    Didihkan santan, masukkan bumbu iris (bawang merah, bawang putih, cabai) serta daun salam dan lengkuas.
+                    Masukkan sayuran yang keras terlebih dahulu (jagung, melinjo), masak hingga setengah matang.
+                    Masukkan sisa sayuran (labu siam, terong, kacang panjang).
+                    Masak hingga semua sayuran matang, tambahkan garam dan gula secukupnya.
                     """
         ),
         Recipe(
@@ -88,11 +106,11 @@ extension Recipe {
             ingredients: "10 buah bakso sapi, 100 gr mie, 50 gr bihun, 1 ikat sawi hijau, 50 gr tauge, 1 sdm bawang goreng, 1 batang seledri, 500 ml kaldu sapi.",
             tools: "Panci, mangkuk, sumpit.",
             steps: """
-                    1. Rebus bakso hingga matang dan mengapung.
-                    2. Rebus mie dan bihun sebentar, tiriskan.
-                    3. Tata mie, bihun, sawi, dan tauge di dalam mangkuk.
-                    4. Siram dengan kaldu sapi panas dan masukkan bakso yang sudah matang.
-                    5. Taburi dengan bawang goreng dan seledri cincang.
+                    Rebus bakso hingga matang dan mengapung.
+                    Rebus mie dan bihun sebentar, tiriskan.
+                    Tata mie, bihun, sawi, dan tauge di dalam mangkuk.
+                    Siram dengan kaldu sapi panas dan masukkan bakso yang sudah matang.
+                    Taburi dengan bawang goreng dan seledri cincang.
                     """
         ),
         Recipe(
@@ -102,11 +120,11 @@ extension Recipe {
             ingredients: "500 gr beras, 500 ml santan, 2 lembar daun salam, 1 batang serai, 1 ruas lengkuas, 1 sdt garam.",
             tools: "Rice cooker/panci.",
             steps: """
-                    1. Cuci beras hingga bersih.
-                    2. Masukkan beras ke dalam rice cooker.
-                    3. Tambahkan santan, daun salam, serai, lengkuas, dan garam.
-                    4. Aduk rata dan masak nasi seperti biasa.
-                    5. Setelah matang, aduk nasi hingga uapnya hilang.
+                    Cuci beras hingga bersih.
+                    Masukkan beras ke dalam rice cooker.
+                    Tambahkan santan, daun salam, serai, lengkuas, dan garam.
+                    Aduk rata dan masak nasi seperti biasa.
+                    Setelah matang, aduk nasi hingga uapnya hilang.
                     """
         ),
         Recipe(
@@ -116,10 +134,10 @@ extension Recipe {
             ingredients: "500 gr ayam, 500 ml air kelapa, 5 siung bawang merah, 3 siung bawang putih, 3 butir kemiri, 1 sdt ketumbar, 50 gr gula merah, 1 sdt garam.",
             tools: "Panci, wajan.",
             steps: """
-                    1. Haluskan bawang merah, bawang putih, kemiri, dan ketumbar.
-                    2. Ungkep ayam bersama bumbu halus, air kelapa, dan gula merah. Masak hingga air menyusut dan bumbu meresap.
-                    3. Panaskan minyak, goreng ayam hingga berwarna cokelat keemasan dan kering.
-                    4. Saring sisa bumbu ungkep dan goreng sebentar hingga kering sebagai taburan.
+                    Haluskan bawang merah, bawang putih, kemiri, dan ketumbar.
+                    Ungkep ayam bersama bumbu halus, air kelapa, dan gula merah. Masak hingga air menyusut dan bumbu meresap.
+                    Panaskan minyak, goreng ayam hingga berwarna cokelat keemasan dan kering.
+                    Saring sisa bumbu ungkep dan goreng sebentar hingga kering sebagai taburan.
                     """
         ),
         Recipe(
@@ -129,10 +147,10 @@ extension Recipe {
             ingredients: "1 ekor ikan gurame/nila, 10 buah cabai merah, 5 siung bawang merah, 3 siung bawang putih, 1 ruas kunyit, 1 ruas jahe, 1 ruas lengkuas, 1 batang serai, 2 lembar daun jeruk, 1 sdm air asam jawa.",
             tools: "Alat pemanggang/teflon grill, cobek/blender, kuas marinasi.",
             steps: """
-                    1. Haluskan bumbu (cabai, bawang merah, bawang putih, kunyit, jahe).
-                    2. Tumis bumbu halus hingga harum, tambahkan lengkuas, serai, dan daun jeruk.
-                    3. Lumuri ikan dengan bumbu yang sudah ditumis. Diamkan beberapa saat agar meresap.
-                    4. Bakar ikan sambil sesekali diolesi sisa bumbu hingga matang sempurna.
+                    Haluskan bumbu (cabai, bawang merah, bawang putih, kunyit, jahe).
+                    Tumis bumbu halus hingga harum, tambahkan lengkuas, serai, dan daun jeruk.
+                    Lumuri ikan dengan bumbu yang sudah ditumis. Diamkan beberapa saat agar meresap.
+                    Bakar ikan sambil sesekali diolesi sisa bumbu hingga matang sempurna.
                     """
         ),
         Recipe(
@@ -142,10 +160,10 @@ extension Recipe {
             ingredients: "500 gr daging ayam/ikan cincang, 100 gr kelapa parut, 5 siung bawang merah, 3 siung bawang putih, 5 buah cabai, 1 ruas kunyit, 1 ruas jahe, 1 ruas lengkuas, 1 ruas kencur, 10 batang serai.",
             tools: "Batang serai/tusuk sate, alat pemanggang/teflon grill, cobek/blender.",
             steps: """
-                    1. Haluskan semua bumbu.
-                    2. Campur daging cincang dengan bumbu halus dan kelapa parut. Aduk hingga rata dan kalis.
-                    3. Ambil sedikit adonan, lilitkan pada batang serai.
-                    4. Bakar sate hingga matang dan harum.
+                    Haluskan semua bumbu.
+                    Campur daging cincang dengan bumbu halus dan kelapa parut. Aduk hingga rata dan kalis.
+                    Ambil sedikit adonan, lilitkan pada batang serai.
+                    Bakar sate hingga matang dan harum.
                     """
         ),
         // --- Makanan Ringan & Jajanan (Snacks & Street Food) ---
@@ -156,11 +174,11 @@ extension Recipe {
             ingredients: "250 gr tepung terigu, 1 sdt ragi, 50 gr gula, 1 butir telur, 300 ml air, 1/2 sdt soda kue, 2 sdm mentega, topping (cokelat, keju, kacang).",
             tools: "Wajan teflon, whisk, mangkuk.",
             steps: """
-                    1. Campur tepung terigu, gula, dan ragi. Tambahkan air sedikit demi sedikit sambil diuleni.
-                    2. Masukkan telur, aduk rata. Diamkan adonan selama 30 menit.
-                    3. Panaskan teflon. Tuang adonan, putar teflon agar adonan menempel di pinggir.
-                    4. Biarkan berlubang-lubang, taburi gula, tutup. Masak hingga matang.
-                    5. Angkat, olesi mentega, beri topping sesuai selera, lipat, dan potong.
+                    Campur tepung terigu, gula, dan ragi. Tambahkan air sedikit demi sedikit sambil diuleni.
+                    Masukkan telur, aduk rata. Diamkan adonan selama 30 menit.
+                    Panaskan teflon. Tuang adonan, putar teflon agar adonan menempel di pinggir.
+                    Biarkan berlubang-lubang, taburi gula, tutup. Masak hingga matang.
+                    Angkat, olesi mentega, beri topping sesuai selera, lipat, dan potong.
                     """
         ),
         Recipe(
@@ -170,10 +188,10 @@ extension Recipe {
             ingredients: "200 gr tepung kanji/tapioka, 3 siung bawang putih, 150 ml air panas, 1 batang daun bawang, 1 sdt garam, 1/4 sdt lada.",
             tools: "Wajan, mangkuk besar, spatula.",
             steps: """
-                    1. Haluskan bawang putih, rebus dengan air hingga mendidih.
-                    2. Dalam mangkuk, campur tepung tapioka dengan daun bawang, garam, dan lada.
-                    3. Tuang air bawang panas ke dalam campuran tepung. Aduk cepat hingga menjadi adonan.
-                    4. Ambil adonan, bentuk pipih. Goreng dalam minyak panas hingga matang dan renyah.
+                    Haluskan bawang putih, rebus dengan air hingga mendidih.
+                    Dalam mangkuk, campur tepung tapioka dengan daun bawang, garam, dan lada.
+                    Tuang air bawang panas ke dalam campuran tepung. Aduk cepat hingga menjadi adonan.
+                    Ambil adonan, bentuk pipih. Goreng dalam minyak panas hingga matang dan renyah.
                     """
         ),
         Recipe(
@@ -183,11 +201,11 @@ extension Recipe {
             ingredients: "500 gr ikan tenggiri giling, 250 gr sagu, 100 ml air, 1 sdm garam, 1 butir telur (untuk pempek kapal selam). Kuah Cuka: 200 gr gula merah, 250 ml air, 3 sdm cuka, 5 siung bawang putih, 10 buah cabai rawit.",
             tools: "Panci, spatula, mangkuk, pisau, wajan.",
             steps: """
-                    1. Campur ikan giling, air, dan garam hingga rata. Tambahkan sagu sedikit demi sedikit, uleni hingga kalis.
-                    2. Bentuk adonan sesuai jenis pempek yang diinginkan (lenjer, kapal selam). Untuk kapal selam, isi adonan dengan telur.
-                    3. Rebus pempek hingga mengapung. Tiriskan.
-                    4. Goreng pempek yang sudah direbus hingga matang.
-                    5. Untuk kuah cuka: Didihkan air, gula merah, cuka, dan bumbu halus (bawang putih, cabai). Saring.
+                    Campur ikan giling, air, dan garam hingga rata. Tambahkan sagu sedikit demi sedikit, uleni hingga kalis.
+                    Bentuk adonan sesuai jenis pempek yang diinginkan (lenjer, kapal selam). Untuk kapal selam, isi adonan dengan telur.
+                    Rebus pempek hingga mengapung. Tiriskan.
+                    Goreng pempek yang sudah direbus hingga matang.
+                    Untuk kuah cuka: Didihkan air, gula merah, cuka, dan bumbu halus (bawang putih, cabai). Saring.
                     """
         ),
         Recipe(
@@ -197,10 +215,10 @@ extension Recipe {
             ingredients: "200 gr tepung ketan, 50 gr tepung beras, 100 ml air pandan, 100 gr gula merah, 100 gr kelapa parut, 1/4 sdt garam.",
             tools: "Panci, mangkuk, saringan.",
             steps: """
-                    1. Campur tepung ketan dan tepung beras. Tambahkan air pandan sedikit demi sedikit, uleni hingga kalis.
-                    2. Ambil sedikit adonan, pipihkan, isi dengan potongan gula merah. Bulatkan kembali.
-                    3. Rebus klepon dalam air mendidih hingga mengapung.
-                    4. Gulingkan klepon yang sudah matang di atas kelapa parut yang sudah dikukus dengan sedikit garam.
+                    Campur tepung ketan dan tepung beras. Tambahkan air pandan sedikit demi sedikit, uleni hingga kalis.
+                    Ambil sedikit adonan, pipihkan, isi dengan potongan gula merah. Bulatkan kembali.
+                    Rebus klepon dalam air mendidih hingga mengapung.
+                    Gulingkan klepon yang sudah matang di atas kelapa parut yang sudah dikukus dengan sedikit garam.
                     """
         ),
         Recipe(
@@ -210,11 +228,11 @@ extension Recipe {
             ingredients: "5 buah tahu, 1 buah wortel, 50 gr tauge, 50 gr kol, 100 gr tepung terigu, 50 gr tepung beras, 100 ml air, 3 siung bawang putih, 1 sdt garam, 1/2 sdt lada, 1/2 sdt ketumbar.",
             tools: "Wajan, pisau, mangkuk.",
             steps: """
-                    1. Belah tahu dan buang isinya.
-                    2. Potong tipis wortel dan kol. Campur dengan tauge. Tumis sebentar.
-                    3. Campur tepung terigu dan tepung beras dengan air. Tambahkan bumbu halus (bawang putih, garam, lada, ketumbar).
-                    4. Isi tahu dengan tumisan sayuran, lalu celupkan ke adonan tepung.
-                    5. Goreng tahu dalam minyak panas hingga matang dan adonan renyah.
+                    Belah tahu dan buang isinya.
+                    Potong tipis wortel dan kol. Campur dengan tauge. Tumis sebentar.
+                    Campur tepung terigu dan tepung beras dengan air. Tambahkan bumbu halus (bawang putih, garam, lada, ketumbar).
+                    Isi tahu dengan tumisan sayuran, lalu celupkan ke adonan tepung.
+                    Goreng tahu dalam minyak panas hingga matang dan adonan renyah.
                     """
         ),
         Recipe(
@@ -224,10 +242,10 @@ extension Recipe {
             ingredients: "5 buah tahu, 150 gr bakso ikan, 10 lembar kulit pangsit, bumbu kacang: 150 gr kacang tanah, 3 siung bawang putih, 5 buah cabai, 1 sdm gula, 1 sdt garam, 100 ml air.",
             tools: "Wajan, panci, blender/cobek.",
             steps: """
-                    1. Potong tahu menjadi dua, lalu keruk sedikit isinya.
-                    2. Isi tahu dengan adonan bakso ikan. Bentuk pangsit seperti perahu dan isi dengan adonan juga.
-                    3. Goreng tahu dan pangsit hingga matang kecokelatan.
-                    4. Untuk bumbu kacang: Goreng kacang, lalu haluskan bersama bawang putih dan cabai. Tambahkan gula, garam, dan air. Masak hingga mengental.
+                    Potong tahu menjadi dua, lalu keruk sedikit isinya.
+                    Isi tahu dengan adonan bakso ikan. Bentuk pangsit seperti perahu dan isi dengan adonan juga.
+                    Goreng tahu dan pangsit hingga matang kecokelatan.
+                    Untuk bumbu kacang: Goreng kacang, lalu haluskan bersama bawang putih dan cabai. Tambahkan gula, garam, dan air. Masak hingga mengental.
                     """
         ),
         Recipe(
@@ -237,11 +255,11 @@ extension Recipe {
             ingredients: "200 gr mie gandum, 200 gr daging ayam, 50 gr jamur, 3 sdm kecap manis, 3 siung bawang putih, 1 sdm saus tiram, 1 ikat sawi, 1 batang daun bawang, 5 lembar pangsit goreng.",
             tools: "Panci, wajan, mangkuk, sumpit.",
             steps: """
-                    1. Rebus mie gandum dan sawi hingga matang. Tiriskan.
-                    2. Tumis bawang putih, masukkan daging ayam dan jamur, masak hingga matang.
-                    3. Tambahkan kecap manis, saus tiram, dan sedikit air. Masak hingga bumbu meresap.
-                    4. Tata mie dan sawi di mangkuk, siram dengan tumisan ayam.
-                    5. Tambahkan daun bawang dan pangsit goreng.
+                    Rebus mie gandum dan sawi hingga matang. Tiriskan.
+                    Tumis bawang putih, masukkan daging ayam dan jamur, masak hingga matang.
+                    Tambahkan kecap manis, saus tiram, dan sedikit air. Masak hingga bumbu meresap.
+                    Tata mie dan sawi di mangkuk, siram dengan tumisan ayam.
+                    Tambahkan daun bawang dan pangsit goreng.
                     """
         ),
         Recipe(
@@ -251,11 +269,11 @@ extension Recipe {
             ingredients: "1 buah lontong, 1 buah kentang, 1 butir telur rebus, 100 gr tauge, 100 gr kol, 100 gr kangkung, 1/2 buah timun, 2 buah tahu, 1 buah tempe, bumbu kacang: 150 gr kacang tanah, 3 siung bawang putih, 5 buah cabai, 1 sdm gula, 1/2 sdt garam, 100 ml air.",
             tools: "Piring, cobek/blender, pisau.",
             steps: """
-                    1. Rebus semua sayuran hingga matang, tiriskan.
-                    2. Goreng tahu dan tempe.
-                    3. Tata lontong, kentang, telur, sayuran, tahu, dan tempe di atas piring.
-                    4. Siram dengan bumbu kacang yang sudah dihaluskan.
-                    5. Tambahkan kerupuk dan bawang goreng sebagai pelengkap.
+                    Rebus semua sayuran hingga matang, tiriskan.
+                    Goreng tahu dan tempe.
+                    Tata lontong, kentang, telur, sayuran, tahu, dan tempe di atas piring.
+                    Siram dengan bumbu kacang yang sudah dihaluskan.
+                    Tambahkan kerupuk dan bawang goreng sebagai pelengkap.
                     """
         ),
         Recipe(
@@ -265,11 +283,11 @@ extension Recipe {
             ingredients: "200 gr tepung beras, 500 ml santan, 50 gr gula, 2 lembar daun pandan, 3 buah pisang raja/tanduk, 10 lembar daun pisang.",
             tools: "Dandang/kukusan, mangkuk, sendok, panci.",
             steps: """
-                    1. Masak santan, gula, daun pandan hingga mendidih.
-                    2. Larutkan tepung beras dengan sedikit santan, lalu masukkan ke dalam panci. Aduk hingga mengental seperti bubur.
-                    3. Ambil selembar daun pisang, beri adonan nagasari, letakkan sepotong pisang di tengahnya.
-                    4. Tutup dengan adonan lagi, lalu bungkus rapi.
-                    5. Kukus hingga matang, sekitar 30 menit.
+                    Masak santan, gula, daun pandan hingga mendidih.
+                    Larutkan tepung beras dengan sedikit santan, lalu masukkan ke dalam panci. Aduk hingga mengental seperti bubur.
+                    Ambil selembar daun pisang, beri adonan nagasari, letakkan sepotong pisang di tengahnya.
+                    Tutup dengan adonan lagi, lalu bungkus rapi.
+                    Kukus hingga matang, sekitar 30 menit.
                     """
         ),
         Recipe(
