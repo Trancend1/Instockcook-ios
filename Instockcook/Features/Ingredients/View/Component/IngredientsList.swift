@@ -1,10 +1,3 @@
-//
-//  ListIngredients.swift
-//  Instockcook
-//
-//  Created by Mac on 12/09/25.
-//
-
 import SwiftUI
 
 struct IngredientsList: View {
@@ -25,7 +18,7 @@ struct IngredientsList: View {
             
             if ingredient.quantity > 0 {
                 Text("\(ingredient.quantity) \(ingredient.unit)")
-                    .foregroundColor(.color1)
+                    .foregroundColor(.green)
                     .font(.subheadline)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)
@@ -33,18 +26,16 @@ struct IngredientsList: View {
                         RoundedRectangle(cornerRadius: 6)
                             .fill(Color.green.opacity(0.15))
                     )
-                
             } else {
-                Button {
-                    isPresentingAdd = true
-                } label: {
-                    Image(systemName: "square.dashed")
-                        .foregroundColor(.primary)
-                }
-                .buttonStyle(.plain)
+                Image(systemName: "square.dashed")
+                    .foregroundColor(.primary)
             }
         }
         .padding(.vertical, 4)
+        .contentShape(Rectangle()) // 🔑 bikin seluruh row bisa ditap
+        .onTapGesture {
+            isPresentingAdd = true
+        }
         .sheet(isPresented: $isPresentingAdd) {
             AddIngredients(ingredient: $ingredient)
         }

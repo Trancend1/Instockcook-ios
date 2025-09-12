@@ -33,6 +33,8 @@ struct FridgeIsField: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") { dismiss() }
                         .foregroundStyle(.color1)
+                        .fontWeight(.semibold)
+                    
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {

@@ -47,7 +47,8 @@ struct AddIngredients: View {
                         Button("Cancel") {
                             dismiss()
                         }
-                        .foregroundStyle(.color1)
+                        .tint(.color1)
+                        .fontWeight(.semibold)
                     }
                     
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -60,6 +61,7 @@ struct AddIngredients: View {
                         }
                         .disabled(quantityString.isEmpty)
                         .tint(.color1)
+                        .fontWeight(.semibold)
                     }
                 }
                 .onAppear {
