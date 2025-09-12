@@ -2,6 +2,8 @@ import SwiftUI
 
 struct MyFridge: View {
     @StateObject private var viewModel = FridgeViewModel()
+    @StateObject private var toolsViewModel = ToolsViewModel()
+    @State private var showModal = false
     
     var body: some View {
         NavigationStack {
@@ -61,11 +63,16 @@ struct MyFridge: View {
             .navigationTitle("My Fridge")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Tools") {}
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.color1)
-                        .padding(20)
+                    Button("Tools") {
+                        showModal = true
+                    }
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.color1)
+                    .padding(20)
                 }
+            }
+            .sheet(isPresented: $showModal) {
+                AddToolsModal(viewModel: toolsViewModel, isPresented: $showModal)
             }
             .sheet(isPresented: $viewModel.isPresentingFridge) {
                 FridgeIsField(selectedIngredients: $viewModel.selectedIngredients)
@@ -82,4 +89,3 @@ struct MyFridge: View {
 #Preview {
     MyFridge()
 }
-

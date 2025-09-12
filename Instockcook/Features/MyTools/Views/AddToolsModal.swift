@@ -50,6 +50,8 @@ struct AddToolsModal: View {
                     isPresented = false
                 }
             )
+            .foregroundStyle(.color1)
+            .fontWeight(.semibold)
         }
         .background(Color(.white))
     }
