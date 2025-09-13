@@ -77,7 +77,7 @@ extension Recipe {
             title: "Soto Ayam Lamongan",
             image: "https://i.ytimg.com/vi/afD1GvxI_YE/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBZYLMRo9MjYzNB9YGW_dDjLsSmiQ",
             description: "Soto ayam berkuah kuning bening khas Lamongan yang kaya rempah, disajikan dengan koya gurih.",
-            ingredients: "500 gr ayam, 2 batang serai, 3 lembar daun jeruk, 1 ruas kunyit, 6 siung bawang merah, 4 siung bawang putih, 3 butir kemiri, 1/2 sdt jintan, 1 sdt ketumbar, 100 gr kol, 50 gr soun, 2 butir telur rebus, 1 batang seledri, 5 sdm koya.",
+            ingredients: "500 gr ayam dada fillet, 2 batang serai, 3 lembar daun jeruk, 1 ruas kunyit, 6 siung bawang merah, 4 siung bawang putih, 3 butir kemiri, 1/2 sdt jintan, 1 sdt ketumbar, 100 gr kol, 50 gr soun, 2 butir bakso sapi, 1 batang seledri, 5 sdm koya.",
             tools: "Panci, wajan, saringan, cobek/blender, mangkuk.",
             steps: """
                     Rebus ayam hingga matang, ambil kaldu dan suwir dagingnya.
@@ -1368,3 +1368,16 @@ extension Recipe {
         )
     ]
 }
+
+extension Array where Element == Recipe {
+    func filter(by selected: [Ingredient]) -> [Recipe] {
+        let keywords = selected.map { $0.name.lowercased() }
+        return self.filter { recipe in
+            let recipeIngredients = recipe.parsedIngredients.map { $0.name.lowercased() }
+            // minimal 3 bahan harus ada
+            let matchCount = keywords.filter { recipeIngredients.contains($0) }.count
+            return matchCount >= 3
+        }
+    }
+}
+
