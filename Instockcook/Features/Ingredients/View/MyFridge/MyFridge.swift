@@ -4,6 +4,8 @@ struct MyFridge: View {
     @StateObject private var viewModel = FridgeViewModel()
     @StateObject private var toolsViewModel = ToolsViewModel()
     @State private var showModal = false
+    @State private var goToRecipes = false
+
     
     var body: some View {
         NavigationStack {
@@ -58,6 +60,25 @@ struct MyFridge: View {
                     }
                 }
             }
+            Button {
+                        goToRecipes = true
+                    } label: {
+                        Text("Generate Resep")
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(
+                                (viewModel.selectedIngredients.isEmpty || toolsViewModel.selectedTools.isEmpty)
+                                ? Color.gray.opacity(0.4)
+                                : Color.color1
+                            )
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                            .padding(.horizontal)
+                    }
+                    .disabled(viewModel.selectedIngredients.isEmpty || toolsViewModel.selectedTools.isEmpty)
+                
+
             .scrollContentBackground(.hidden)
             .background(Color.white)
             .navigationTitle("My Fridge")
@@ -83,6 +104,9 @@ struct MyFridge: View {
                 }
             }
         }
+        .navigationDestination(isPresented: $goToRecipes) {
+                RecipeView(recipes: Recipe.all) // nanti diganti hasil generate
+            }
     }
 }
 
