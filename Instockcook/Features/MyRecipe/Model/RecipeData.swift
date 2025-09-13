@@ -8,33 +8,61 @@ struct Recipe: Identifiable {
     let ingredients: String
     let tools: String
     let steps: String
-    
-    var parsedIngredients: [(name: String, quantity: String)] {
-            ingredients.split(separator: ",").compactMap { item in
-                let parts = item.trimmingCharacters(in: .whitespaces).split(separator: " ")
-                
-                if parts.count >= 3 {
-                    let quantity = parts.prefix(2).joined(separator: " ")
-                    let name = parts.dropFirst(2).joined(separator: " ")
-                    return (name: name, quantity: quantity)
-                } else if parts.count == 2 {
-                    let quantity = String(parts[0])
-                    let name = String(parts[1])
-                    return (name: name, quantity: quantity)
-                } else {
-                    return (name: String(item), quantity: "")
-                }
-            }
-        }
 }
 
 extension Recipe {
+    var parsedIngredients: [Ingredient] {
+            ingredients
+                .split(separator: ",")
+                .compactMap { item in
+                    // pastikan jadi String dulu
+                    let parts = String(item)
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                        .split(separator: " ")
+                    
+                    var quantity = 0
+                    var unit = ""
+                    var name = ""
+                    
+                    if parts.count >= 3 {
+                        quantity = Int(parts[0]) ?? 0
+                        unit = String(parts[1])
+                        name = parts.dropFirst(2).joined(separator: " ")
+                    } else if parts.count == 2 {
+                        quantity = Int(parts[0]) ?? 0
+                        name = String(parts[1])
+                    } else {
+                        name = String(item).trimmingCharacters(in: .whitespacesAndNewlines)
+                    }
+                    
+                    // cari match di DataIngredient
+                    if let match = Ingredient.DataIngredient.first(where: {
+                        $0.name.lowercased() == name.lowercased()
+                    }) {
+                        // pakai image & unit bawaan dari master
+                        return Ingredient(
+                            name: name,
+                            quantity: quantity,
+                            unit: match.unit.isEmpty ? unit : match.unit,
+                            image: match.image
+                        )
+                    } else {
+                        // fallback default
+                        return Ingredient(
+                            name: name,
+                            quantity: quantity,
+                            unit: unit,
+                            image: "🥬"
+                        )
+                    }
+                }
+        }
     static let all: [Recipe] = [
         Recipe(
             title: "Nasi Goreng Kampung",
             image: "https://bristolindonesiansociety.com/wp-content/uploads/2016/03/nasi-goreng-kampung.jpg",
             description: "Nasi goreng sederhana ala rumahan dengan cita rasa autentik dan bahan seadanya.",
-            ingredients: "500 gr nasi putih, 4 siung bawang merah, 3 siung bawang putih, 5 buah cabai rawit, 1 butir telur, 2 sdm kecap manis, 1/2 sdt garam, 1/4 sdt lada.",
+            ingredients: "500 gr nasi putih, 4 siung bawang merah, 3 siung bawang putih, 5 buah cabe rawit, 1 butir telur ayam, 2 sdm kecap manis, 1/2 sdt garam, 1/4 sdt lada",
             tools: "Wajan, spatula, pisau, cobek/ulekan.",
             steps: """
                     Haluskan bawang merah, bawang putih, dan cabai rawit dengan cobek.

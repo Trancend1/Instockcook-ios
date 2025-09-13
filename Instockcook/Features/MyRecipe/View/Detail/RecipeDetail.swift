@@ -9,12 +9,7 @@ import SwiftUI
 
 struct RecipeDetail: View {
     var recipe: Recipe
-    @State private var selectedTab: Tab = .details
-    
-    enum Tab: String, CaseIterable {
-        case details = "Details"
-        case step = "Step"
-    }
+    @State private var selectedTab: RecipeTab = .details
     
     var ingredients: [String] {
         recipe.ingredients
@@ -66,49 +61,28 @@ struct RecipeDetail: View {
                     .foregroundColor(.primary)
                 
                 // Picker
-                Picker("Tabs", selection: $selectedTab) {
-                    ForEach(Tab.allCases, id: \.self) { tab in
-                        Text(tab.rawValue).tag(tab)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .tint(.red)
+                UnderlinePicker(selectedTab: $selectedTab)
+                                    .padding(.horizontal)
                 
                 Divider()
                 
                 // Konten sesuai tab
                 if selectedTab == .details {
                     VStack(alignment: .leading, spacing: 8) {
+                        // Ingredients pakai style dari model
                         HStack {
                             Text("Ingredients")
                                 .font(.title3.bold())
-                                .foregroundColor(Color("Utama"))
-                            Spacer()
-                            Text("\(ingredients.count) item")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.vertical, 5)
-                        
-                        ForEach(recipe.parsedIngredients, id: \.name) { ingredient in
-                            HStack {
-                                Image(systemName: "leaf.circle.fill")
-                                    .foregroundColor(.color1)
-                                Text(ingredient.name)
-                                Spacer()
-                                
-                                Text(ingredient.quantity)
-                                    .font(.body)
-                                    .foregroundColor(.color1)
-                            }
-                            .padding(.vertical, 5)
                         }
                         
+                        ForEach(recipe.parsedIngredients) { ingredient in
+                            IngredientsList(ingredient: .constant(ingredient))
+                        }
                         Spacer()
                         HStack {
                             Text("Tools")
                                 .font(.title3.bold())
-                                .foregroundColor(.red)
+                                .foregroundColor(.color1)
                             Spacer()
                             Text("\(ingredients.count) item")
                                 .font(.subheadline)
@@ -118,14 +92,9 @@ struct RecipeDetail: View {
                         
                         ForEach(recipe.parsedIngredients, id: \.name) { ingredient in
                             HStack {
-                                Image(systemName: "leaf.circle.fill")
-                                    .foregroundColor(.red)
+                                Image(systemName: "")
+                                    
                                 Text(ingredient.name)
-                                Spacer()
-                                
-                                Text(ingredient.quantity)
-                                    .font(.body)
-                                    .foregroundColor(.color1)
                             }
                             .padding(.vertical, 5)
                         }
@@ -136,7 +105,7 @@ struct RecipeDetail: View {
                         ForEach(Array(steps.enumerated()), id: \.offset) { index, step in
                             HStack(alignment: .top, spacing: 12) {
                                 Circle()
-                                    .fill(.red)
+                                    .fill(.color1)
                                     .frame(width: 28, height: 28)
                                     .overlay(Text("\(index+1)").foregroundColor(.white))
                                 
@@ -148,7 +117,6 @@ struct RecipeDetail: View {
                     .padding(.top, 8)
                 }
                 
-                //                    Spacer()
             }
             .padding()
         }

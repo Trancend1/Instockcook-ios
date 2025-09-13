@@ -22,6 +22,7 @@ struct RecipeView: View {
     }
 }
 
+
 struct RecipeView_Previews: PreviewProvider {
     static var previews: some View {
         RecipeView(recipes: Recipe.all)
