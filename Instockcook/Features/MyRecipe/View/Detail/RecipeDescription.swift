@@ -13,7 +13,7 @@ struct RecipeDescription: View {
     var body: some View {
         NavigationView{
             RecipeDetail(recipe: recipe)
-                .padding(20)
+                .padding(4)
         }
     }
 }
