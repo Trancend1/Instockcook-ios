@@ -12,6 +12,7 @@ struct OnboardingView: View {
                 .scaledToFit()
                 .frame(height: 250)
             
+            
             Text("Welcome to InStockCook")
                 .font(.title)
                 .fontWeight(.bold)
