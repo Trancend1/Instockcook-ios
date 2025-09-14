@@ -4,114 +4,141 @@ struct MyFridge: View {
     @StateObject private var viewModel = FridgeViewModel()
     @StateObject private var toolsViewModel = ToolsViewModel()
     @State private var showModal = false
+    @State private var showFavorites = false
     @State private var goToRecipes = false
-    
     
     var body: some View {
         NavigationStack {
-            VStack {
-                List {
-                    Section(
-                        header: HStack {
-                            Text("Ingredients")
-                                .textCase(nil)
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.color1)
-                            Spacer()
-                            Button("Add") {
-                                viewModel.isPresentingFridge = true
-                            }
-                            .textCase(nil)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.color1)
-                        }
-                    ) {
-                        if viewModel.selectedIngredients.isEmpty {
-                            VStack {
-                                Spacer(minLength: 200)
-                                Image("EmptyFridge")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 160)
-                                    .padding(.bottom, 12)
-                                Text("Kosong nih, klik Add!")
-                                    .font(.callout)
-                                    .foregroundStyle(.secondary)
-                                    .multilineTextAlignment(.center)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .listRowSeparator(.hidden)
-                            .listRowBackground(Color.clear)
-                        } else {
-                            ForEach($viewModel.selectedIngredients) { $ingredient in
-                                IngredientsList(ingredient: $ingredient)
-                                    .listRowSeparator(.hidden)
-                                    .onTapGesture {
-                                        viewModel.editingIngredient = ingredient
-                                    }
-                                    .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                                        Button(role: .destructive) {
-                                            viewModel.deleteIngredient(ingredient)
-                                        } label: {
-                                            Label("Delete", systemImage: "trash")
-                                        }
-                                    }
-                            }
-                        }
+            VStack(alignment: .center, spacing: 0) {
+                // Header
+                HStack(alignment: .top) {
+                    Text("Ingredients")
+                        .textCase(nil)
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.color1)
+                        .padding(20)
+                    
+                    Spacer()
+                    Button("Add") {
+                        viewModel.isPresentingFridge = true
                     }
+                    .textCase(nil)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.color1)
+                    .padding(20)
                 }
                 
+                
+                // Konten
+                if viewModel.selectedIngredients.isEmpty {
+                    Spacer()
+                    VStack {
+                        Image("EmptyFridge")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 160)
+                            .padding(.bottom, 12)
+                        Text("Kosong nih, klik Add!")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    Spacer()
+                } else {
+                    List {
+                        ForEach($viewModel.selectedIngredients) { $ingredient in
+                            IngredientsList(ingredient: $ingredient)
+                                .listRowSeparator(.hidden)
+                                .onTapGesture {
+                                    viewModel.editingIngredient = ingredient
+                                }
+                                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                    Button(role: .destructive) {
+                                        viewModel.deleteIngredient(ingredient)
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                }
+                        }
+                    }
+                    .padding(EdgeInsets(top: -30, leading: -10, bottom: 0, trailing: -10))
+                    .scrollContentBackground(.hidden)
+                }
+                
+                // Generate Button
                 Button {
                     goToRecipes = true
                 } label: {
                     Text("Generate Resep")
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                        .background(
-                            (viewModel.selectedIngredients.count < 3 || toolsViewModel.selectedTools.isEmpty)
-                            ? Color.gray.opacity(0.4)
-                            : Color.color1
-                        )
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                        .padding(.horizontal)
+                        .padding(12)
+                        .foregroundStyle(.white)
                 }
+                .background(
+                    (viewModel.selectedIngredients.count < 3 || toolsViewModel.selectedTools.isEmpty)
+                    ? Color.gray.opacity(0.4)
+                    : Color.color1
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .padding(.horizontal, 30)
+                .padding(.vertical, 5)
                 .disabled(viewModel.selectedIngredients.count < 3 || toolsViewModel.selectedTools.isEmpty)
-
             }
-            .scrollContentBackground(.hidden)
             .background(Color.white)
             .navigationTitle("My Fridge")
+//            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Tools") {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button {
                         showModal = true
+                    } label: {
+                        Image(systemName: "frying.pan")
                     }
                     .fontWeight(.semibold)
                     .foregroundStyle(.color1)
-                    .padding(20)
+                    
+                    Button {
+                        showFavorites = true
+                    } label: {
+                        Image(systemName: "heart")
+                    }
+                    .fontWeight(.bold)
+                    .foregroundStyle(.color1)
                 }
             }
+            // Modal Add Tools
             .sheet(isPresented: $showModal) {
                 AddToolsModal(viewModel: toolsViewModel, isPresented: $showModal)
+                    .presentationDragIndicator(.visible)
             }
+            // Modal Favorite
+            .sheet(isPresented: $showFavorites) {
+                Favorite()
+                    .presentationDragIndicator(.visible)
+            }
+            // Modal Add Ingredients
             .sheet(isPresented: $viewModel.isPresentingFridge) {
                 FridgeIsField(selectedIngredients: $viewModel.selectedIngredients)
+                    .presentationDragIndicator(.visible)
             }
+            // Modal Edit Quantity
             .sheet(item: $viewModel.editingIngredient) { ingredient in
                 if let index = viewModel.selectedIngredients.firstIndex(where: { $0.id == ingredient.id }) {
                     AddIngredients(ingredient: $viewModel.selectedIngredients[index])
+                        .presentationDetents([.medium/*, .large*/])
+                        .presentationDragIndicator(.visible)
+                        
                 }
             }
+            // Navigate to Recipes
             .navigationDestination(isPresented: $goToRecipes) {
                 RecipeView(
                     recipes: Recipe.all,
                     selectedIngredients: viewModel.selectedIngredients
                 )
             }
-
         }
     }
 }

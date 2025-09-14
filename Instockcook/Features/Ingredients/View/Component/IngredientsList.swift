@@ -19,13 +19,13 @@ struct IngredientsList: View {
             
             if ingredient.quantity > 0 {
                 Text("\(ingredient.quantity) \(ingredient.unit)")
-                    .foregroundColor(.green)
+                    .foregroundColor(.color1)
                     .font(.subheadline)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)
                     .background(
                         RoundedRectangle(cornerRadius: 6)
-                            .fill(Color.green.opacity(0.15))
+                            .fill(Color.color1.opacity(0.15))
                     )
             } else {
                 Image(systemName: "square.dashed")
@@ -33,7 +33,7 @@ struct IngredientsList: View {
             }
         }
         .padding(.vertical, 4)
-        .contentShape(Rectangle()) // 🔑 bikin seluruh row bisa ditap
+        .contentShape(Rectangle())
         .onTapGesture {
             isPresentingAdd = true
         }
