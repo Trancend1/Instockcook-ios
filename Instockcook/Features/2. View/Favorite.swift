@@ -11,25 +11,52 @@ struct Favorite: View {
 
     var body: some View {
         NavigationView {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(Array(recipeViewModel.recipes.enumerated()), id: \.element.id) { index, recipe in
-                        if recipe.favorite {
-                            ZStack(alignment: .topTrailing) {
-                                RecipeCard(recipe: $recipeViewModel.recipes[index])
-                                
-                                Button(action: {
-                                    recipeViewModel.toggleFavorite(for: recipe)
-                                }) {
-                                    Image(systemName: recipe.favorite ? "heart.fill" : "heart")
-                                        .foregroundColor(.red)
-                                        .padding(8)
+            Group {
+                if recipeViewModel.recipes.filter({ $0.favorite }).isEmpty {
+                    // 👇 Placeholder kalau kosong
+                    VStack(spacing: 12) {
+                        Image(systemName: "heart.slash")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 80, height: 80)
+                            .foregroundColor(.gray.opacity(0.6))
+
+                        Text("Belum ada resep favorit")
+                            .font(.headline)
+                            .foregroundColor(.gray.opacity(0.8))
+
+//                        Text("Tambahkan resep ke favorit dengan klik ikon hati ❤️")
+//                            .font(.subheadline)
+//                            .foregroundColor(.gray.opacity(0.6))
+//                            .multilineTextAlignment(.center)
+//                            .padding(.horizontal, 30)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    // 👇 Isi favorite
+                    ScrollView {
+                        LazyVGrid(columns: columns, spacing: 16) {
+                            ForEach(Array(recipeViewModel.recipes.enumerated()), id: \.element.id) { index, recipe in
+                                if recipe.favorite {
+                                    ZStack(alignment: .topTrailing) {
+                                        RecipeCard(recipe: $recipeViewModel.recipes[index])
+                                        
+                                        Button(action: {
+                                            recipeViewModel.toggleFavorite(for: recipe)
+                                        }) {
+                                            // kalau mau tombol remove dari fav
+                                            Image(systemName: "xmark.circle.fill")
+                                                .foregroundColor(.red.opacity(0.8))
+                                                .font(.title2)
+                                                .padding(6)
+                                        }
+                                    }
                                 }
                             }
                         }
+                        .padding()
                     }
                 }
-                .padding()
             }
             .navigationTitle("Favorites")
             .toolbar {
