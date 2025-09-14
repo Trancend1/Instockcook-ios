@@ -8,6 +8,7 @@ struct Recipe: Identifiable {
     let ingredients: String
     let tools: String
     let steps: String
+    var favorite: Bool = false
     
     var parsedTools: [String] {
         tools

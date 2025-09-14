@@ -2,8 +2,9 @@ import SwiftUI
 
 // Let's create a new file called RecipeCard.swift
 struct RecipeCard: View {
-    var recipe: Recipe
-    @State private var selectedRecipe: Recipe? = nil
+    @Binding var recipe: Recipe
+    @State private var showDetail = false
+//    @State private var selectedRecipe: Recipe? = nil
 
     var body: some View {
         VStack(spacing: 8) {
@@ -39,14 +40,14 @@ struct RecipeCard: View {
         .cornerRadius(10)
         .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
         .onTapGesture {
-            selectedRecipe = recipe
+//            selectedRecipe = recipe
+            showDetail = true
         }
-        .sheet(item: $selectedRecipe) { recipe in
-            // Assuming RecipeDetail exists
-            NavigationView {
-                RecipeDetail(recipe: recipe)
-                    .padding(20)
-            }
+        .sheet(isPresented: $showDetail) {
+                    NavigationView {
+                        RecipeDetail(recipe: $recipe)
+                            .padding(20)
+                    }
             .presentationDragIndicator(.visible)
         }
     }
