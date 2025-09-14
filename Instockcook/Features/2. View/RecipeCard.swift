@@ -1,15 +1,10 @@
-//
-//  RecipeCard.swift
-//  Instockcook
-//
-//  Created by Mac on 11/09/25.
-//
-
 import SwiftUI
 
+// Let's create a new file called RecipeCard.swift
 struct RecipeCard: View {
-    var recipe : Recipe
-    
+    var recipe: Recipe
+    @State private var selectedRecipe: Recipe? = nil
+
     var body: some View {
         VStack(spacing: 8) {
             AsyncImage(url: URL(string: recipe.image)) { image in
@@ -31,29 +26,28 @@ struct RecipeCard: View {
                     .cornerRadius(12)
             }
             
-            // Judul
-            
             Text(recipe.title)
                 .font(.callout)
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 8)
                 .lineLimit(2)
-            //                Image(systemName: "heart")
-            
         }
-        .frame(width: 150) // lebar kartu
+        .frame(width: 150)
         .frame(height: 175)
-        //        .padding()
         .background(Color.white)
         .cornerRadius(10)
         .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
+        .onTapGesture {
+            selectedRecipe = recipe
+        }
+        .sheet(item: $selectedRecipe) { recipe in
+            // Assuming RecipeDetail exists
+            NavigationView {
+                RecipeDetail(recipe: recipe)
+                    .padding(20)
+            }
+            .presentationDragIndicator(.visible)
+        }
     }
 }
-
-struct RecipeCard_Previews: PreviewProvider {
-    static var previews: some View {
-        RecipeCard(recipe: Recipe.all[0])
-    }
-}
-

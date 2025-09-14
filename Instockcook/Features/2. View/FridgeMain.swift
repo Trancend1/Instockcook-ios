@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct MyFridge: View {
+struct FridgeMain: View {
     @StateObject private var viewModel = FridgeViewModel()
     @StateObject private var toolsViewModel = ToolsViewModel()
     @State private var showModal = false
@@ -116,7 +116,7 @@ struct MyFridge: View {
             }
             // Modal Add Tools
             .sheet(isPresented: $showModal) {
-                AddToolsModal(viewModel: toolsViewModel, isPresented: $showModal)
+                ToolsAdd(viewModel: toolsViewModel, isPresented: $showModal)
                     .presentationDragIndicator(.visible)
             }
             // Modal Favorite
@@ -126,13 +126,13 @@ struct MyFridge: View {
             }
             // Modal Add Ingredients
             .sheet(isPresented: $viewModel.isPresentingFridge) {
-                FridgeIsField(selectedIngredients: $viewModel.selectedIngredients)
+                FridgeField(selectedIngredients: $viewModel.selectedIngredients)
                     .presentationDragIndicator(.visible)
             }
             // Modal Edit Quantity
             .sheet(item: $viewModel.editingIngredient) { ingredient in
                 if let index = viewModel.selectedIngredients.firstIndex(where: { $0.id == ingredient.id }) {
-                    AddIngredients(ingredient: $viewModel.selectedIngredients[index])
+                    IngredientsAdd(ingredient: $viewModel.selectedIngredients[index])
                         .presentationDetents([.medium/*, .large*/])
                         .presentationDragIndicator(.visible)
                         
@@ -152,5 +152,5 @@ struct MyFridge: View {
 }
 
 #Preview {
-    MyFridge()
+    FridgeMain()
 }

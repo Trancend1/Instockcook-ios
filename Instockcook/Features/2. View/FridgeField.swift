@@ -1,5 +1,5 @@
 //
-//  FridgeisField.swift
+//  FridgeField.swift
 //  Instockcook
 //
 //  Created by Mac on 12/09/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FridgeIsField: View {
+struct FridgeField: View {
 
     @Binding var selectedIngredients: [Ingredient]
 
@@ -50,7 +50,7 @@ struct FridgeIsField: View {
             }
             .sheet(item: $editingIngredient) { ingredient in
                 if let idx = draftSelected.firstIndex(where: { $0.id == ingredient.id }) {
-                    AddIngredients(ingredient: $draftSelected[idx])
+                    IngredientsAdd(ingredient: $draftSelected[idx])
                 }
             }
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))

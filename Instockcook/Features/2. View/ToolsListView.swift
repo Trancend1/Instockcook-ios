@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ToolsListView: View {
+struct ToolsList: View {
     @ObservedObject var viewModel: ToolsViewModel
     @State private var showModal = false
     
@@ -10,14 +10,14 @@ struct ToolsListView: View {
                 showModal = true
             }
             .sheet(isPresented: $showModal) {
-                AddToolsModal(viewModel: viewModel, isPresented: $showModal)
+                ToolsAdd(viewModel: viewModel, isPresented: $showModal)
             }
         }
     }
 }
 
 #Preview {
-    ToolsListView(viewModel: ToolsViewModel())
+    ToolsList(viewModel: ToolsViewModel())
 }
 
 // Ganti Ke UI MyFridge

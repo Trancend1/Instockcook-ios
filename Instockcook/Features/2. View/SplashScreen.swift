@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SplashScreenView: View {
+struct SplashScreen: View {
     @State private var isActive = false
     @AppStorage("hasSeenOnboarding") var hasSeenOnboarding: Bool = false
     
@@ -29,7 +29,7 @@ struct SplashScreenView: View {
             // Setelah splash, pindah ke onboarding atau main
                     .fullScreenCover(isPresented: $isActive) {
                         if hasSeenOnboarding {
-                            MyFridge()
+                            FridgeMain()
                         } else {
                             OnboardingView()
                         }
@@ -38,5 +38,5 @@ struct SplashScreenView: View {
     }
 }
 #Preview {
-    SplashScreenView()
+    SplashScreen()
 }

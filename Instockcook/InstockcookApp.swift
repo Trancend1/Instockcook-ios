@@ -6,7 +6,7 @@ struct InstockcookApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SplashScreenView()
+            SplashScreen()
         }
     }
 }

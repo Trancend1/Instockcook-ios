@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct AddToolsModal: View {
+struct ToolsAdd: View {
     @ObservedObject var viewModel: ToolsViewModel
     @Binding var isPresented: Bool
     
@@ -58,5 +58,5 @@ struct AddToolsModal: View {
 }
 
 #Preview {
-    AddToolsModal(viewModel: ToolsViewModel(), isPresented: .constant(true))
+    ToolsAdd(viewModel: ToolsViewModel(), isPresented: .constant(true))
 }

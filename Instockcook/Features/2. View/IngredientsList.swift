@@ -41,7 +41,7 @@ struct IngredientsList: View {
                 }
         }
         .sheet(isPresented: $isPresentingAdd) {
-            AddIngredients(ingredient: $ingredient)
+            IngredientsAdd(ingredient: $ingredient)
         }
 
     }
