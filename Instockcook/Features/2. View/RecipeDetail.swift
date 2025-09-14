@@ -61,6 +61,9 @@ struct RecipeDetail: View {
                         .onTapGesture {
                             recipe.favorite.toggle()
                         }
+                        .font(.system(size: 25))
+                        .fontWeight(.bold)
+                        .foregroundStyle(.color1)
                 }
                 
                 // Deskripsi
