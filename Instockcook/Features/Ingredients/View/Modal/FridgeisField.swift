@@ -68,7 +68,7 @@ struct FridgeIsField: View {
                 ForEach(draftSelected.indices, id: \.self) { idx in
                     let binding = $draftSelected[idx]
 
-                    IngredientsList(ingredient: binding)
+                    IngredientsList(isFromRecipeDetail: false, ingredient: binding)
                         .listRowSeparator(.hidden)
                         .onTapGesture { editingIngredient = binding.wrappedValue }
                         .swipeActions(edge: .leading, allowsFullSwipe: false) {
@@ -109,7 +109,7 @@ struct FridgeIsField: View {
                     if searchText.isEmpty || draftAll[idx].name.localizedCaseInsensitiveContains(searchText) {
                         let binding = $draftAll[idx]
 
-                        IngredientsList(ingredient: binding)
+                        IngredientsList(isFromRecipeDetail: false, ingredient: binding)
                             .listRowSeparator(.hidden)
                             .onChange(of: binding.wrappedValue.quantity) { oldValue, newQuantity in
                                 if newQuantity > 0 {

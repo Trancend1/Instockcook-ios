@@ -79,6 +79,7 @@ extension Ingredient {
         Ingredient(name: "Jagung Manis", quantity: 0, unit: "buah", image: "🌽"),
         Ingredient(name: "Paprika Merah", quantity: 0, unit: "buah", image: "🫑"),
         Ingredient(name: "Paprika Hijau", quantity: 0, unit: "buah", image: "🫑"),
-        Ingredient(name: "Paprika Kuning", quantity: 0, unit: "buah", image: "🫑")
+        Ingredient(name: "Paprika Kuning", quantity: 0, unit: "buah", image: "🫑"),
+        Ingredient(name: "Jintan", quantity: 0, unit: "sdt", image: "🫚")
     ]
 }

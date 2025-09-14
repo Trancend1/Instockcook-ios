@@ -69,14 +69,13 @@ struct RecipeDetail: View {
                 // Konten sesuai tab
                 if selectedTab == .details {
                     VStack(alignment: .leading, spacing: 8) {
-                        // Ingredients pakai style dari model
                         HStack {
                             Text("Ingredients")
                                 .font(.title3.bold())
                         }
                         
                         ForEach(recipe.parsedIngredients) { ingredient in
-                            IngredientsList(ingredient: .constant(ingredient))
+                            IngredientsList(isFromRecipeDetail: true, ingredient: .constant(ingredient))
                         }
                         Spacer()
                         HStack {
@@ -84,17 +83,17 @@ struct RecipeDetail: View {
                                 .font(.title3.bold())
                                 .foregroundColor(.color1)
                             Spacer()
-                            Text("\(ingredients.count) item")
+                            Text("\(recipe.parsedTools.count) item")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                         }
                         .padding(.vertical, 5)
                         
-                        ForEach(recipe.parsedIngredients, id: \.name) { ingredient in
+                        ForEach(recipe.parsedTools, id: \.self) { tool in
                             HStack {
                                 Image(systemName: "")
                                     
-                                Text(ingredient.name)
+                                Text(tool)
                             }
                             .padding(.vertical, 5)
                         }

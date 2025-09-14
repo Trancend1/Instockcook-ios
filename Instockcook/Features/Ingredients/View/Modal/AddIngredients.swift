@@ -54,7 +54,7 @@ struct AddIngredients: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button("Save") {
                             if let newQuantity = Int(quantityString), newQuantity > 0 {
-                                ingredient.quantity = newQuantity
+                                ingredient.quantity = Int(newQuantity)
                                 print("Quantity Saved: \(ingredient.quantity)")
                             }
                             dismiss()
