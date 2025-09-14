@@ -2,6 +2,7 @@ import SwiftUI
 
 struct IngredientsList: View {
     @State private var isPresentingAdd = false
+    var isFromRecipeDetail: Bool = false
     @Binding var ingredient: Ingredient
     
     var body: some View {
@@ -33,9 +34,11 @@ struct IngredientsList: View {
             }
         }
         .padding(.vertical, 4)
-        .contentShape(Rectangle()) // 🔑 bikin seluruh row bisa ditap
+        .contentShape(Rectangle())
         .onTapGesture {
-            isPresentingAdd = true
+            if !isFromRecipeDetail {
+                    isPresentingAdd = true
+                }
         }
         .sheet(isPresented: $isPresentingAdd) {
             AddIngredients(ingredient: $ingredient)

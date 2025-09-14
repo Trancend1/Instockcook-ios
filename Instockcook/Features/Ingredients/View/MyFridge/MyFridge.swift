@@ -110,8 +110,9 @@ struct MyFridge: View {
                     recipes: Recipe.all,
                     selectedIngredients: viewModel.selectedIngredients
                 )
+                .navigationTitle("Recipes")
+                .navigationBarTitleDisplayMode(.inline)
             }
-
         }
     }
 }

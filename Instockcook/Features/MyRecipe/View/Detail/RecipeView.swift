@@ -26,7 +26,6 @@ struct RecipeView: View {
                     }
                 }
             }
-            .navigationTitle("Recipes")
         }
     }
 }

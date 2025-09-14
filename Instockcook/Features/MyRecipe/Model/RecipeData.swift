@@ -8,55 +8,60 @@ struct Recipe: Identifiable {
     let ingredients: String
     let tools: String
     let steps: String
+    
+    var parsedTools: [String] {
+        tools
+            .split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+    }
 }
 
 extension Recipe {
     var parsedIngredients: [Ingredient] {
-            ingredients
-                .split(separator: ",")
-                .compactMap { item in
-                    // pastikan jadi String dulu
-                    let parts = String(item)
-                        .trimmingCharacters(in: .whitespacesAndNewlines)
-                        .split(separator: " ")
-                    
-                    var quantity = 0
-                    var unit = ""
-                    var name = ""
-                    
-                    if parts.count >= 3 {
-                        quantity = Int(parts[0]) ?? 0
-                        unit = String(parts[1])
-                        name = parts.dropFirst(2).joined(separator: " ")
-                    } else if parts.count == 2 {
-                        quantity = Int(parts[0]) ?? 0
-                        name = String(parts[1])
-                    } else {
-                        name = String(item).trimmingCharacters(in: .whitespacesAndNewlines)
-                    }
-                    
-                    // cari match di DataIngredient
-                    if let match = Ingredient.DataIngredient.first(where: {
-                        $0.name.lowercased() == name.lowercased()
-                    }) {
-                        // pakai image & unit bawaan dari master
-                        return Ingredient(
-                            name: name,
-                            quantity: quantity,
-                            unit: match.unit.isEmpty ? unit : match.unit,
-                            image: match.image
-                        )
-                    } else {
-                        // fallback default
-                        return Ingredient(
-                            name: name,
-                            quantity: quantity,
-                            unit: unit,
-                            image: "🥬"
-                        )
-                    }
+        ingredients
+            .split(separator: ",")
+            .compactMap { item in
+                let parts = String(item)
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .split(separator: " ")
+                
+                var quantity = 0
+                var unit = ""
+                var name = ""
+                
+                if parts.count >= 3 {
+                    quantity = Int(parts[0]) ?? 0
+                    unit = String(parts[1])
+                    name = parts.dropFirst(2).joined(separator: " ")
+                } else if parts.count == 2 {
+                    quantity = Int(parts[0]) ?? 0
+                    name = String(parts[1])
+                } else {
+                    name = String(item).trimmingCharacters(in: .whitespacesAndNewlines)
                 }
-        }
+                
+                // cari match di DataIngredient
+                if let match = Ingredient.DataIngredient.first(where: {
+                    $0.name.lowercased() == name.lowercased()
+                }) {
+                    // pakai image & unit bawaan dari master
+                    return Ingredient(
+                        name: name,
+                        quantity: Int(quantity),
+                        unit: match.unit.isEmpty ? unit : match.unit,
+                        image: match.image
+                    )
+                } else {
+                    // fallback default
+                    return Ingredient(
+                        name: name,
+                        quantity: Int(quantity),
+                        unit: unit,
+                        image: "🥬"
+                    )
+                }
+            }
+    }
     static let all: [Recipe] = [
         Recipe(
             title: "Nasi Goreng Kampung",
@@ -77,7 +82,7 @@ extension Recipe {
             title: "Soto Ayam Lamongan",
             image: "https://i.ytimg.com/vi/afD1GvxI_YE/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBZYLMRo9MjYzNB9YGW_dDjLsSmiQ",
             description: "Soto ayam berkuah kuning bening khas Lamongan yang kaya rempah, disajikan dengan koya gurih.",
-            ingredients: "500 gr ayam dada fillet, 2 batang serai, 3 lembar daun jeruk, 1 ruas kunyit, 6 siung bawang merah, 4 siung bawang putih, 3 butir kemiri, 1/2 sdt jintan, 1 sdt ketumbar, 100 gr kol, 50 gr soun, 2 butir bakso sapi, 1 batang seledri, 5 sdm koya.",
+            ingredients: "500 gr ayam dada fillet, 2 batang serai, 3 lembar daun jeruk, 1 ruas kunyit, 6 siung bawang merah, 4 siung bawang putih, 3 butir kemiri, 0.5 sdt jintan, 1 sdt ketumbar, 100 gr kol, 50 gr soun, 2 butir bakso sapi, 1 batang seledri, 5 sdm koya.",
             tools: "Panci, wajan, saringan, cobek/blender, mangkuk.",
             steps: """
                     Rebus ayam hingga matang, ambil kaldu dan suwir dagingnya.
@@ -1374,9 +1379,8 @@ extension Array where Element == Recipe {
         let keywords = selected.map { $0.name.lowercased() }
         return self.filter { recipe in
             let recipeIngredients = recipe.parsedIngredients.map { $0.name.lowercased() }
-            // minimal 3 bahan harus ada
             let matchCount = keywords.filter { recipeIngredients.contains($0) }.count
-            return matchCount >= 3
+            return matchCount >= 1
         }
     }
 }
