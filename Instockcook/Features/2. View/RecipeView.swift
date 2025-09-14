@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeView: View {
     @State var recipes: [Recipe]
-    var selectedIngredients: [Ingredient]   
+    var selectedIngredients: [Ingredient]
     
     var body: some View {
         // filter disini
@@ -21,8 +21,10 @@ struct RecipeView: View {
                     Text("Tidak ada resep yang cocok 😢")
                         .padding()
                 } else {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 160), spacing: 15)]) {
-                        DescResepModal(recipes: filteredRecipes)
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 160), spacing: 15)], spacing: 15) {
+                        ForEach(filteredRecipes) { recipe in
+                            RecipeCard(recipe: recipe)
+                        }
                     }
                 }
             }

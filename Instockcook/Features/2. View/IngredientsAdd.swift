@@ -1,5 +1,5 @@
 //
-//  AddIngredients.swift
+//  IngredientsAdd.swift
 //  Instockcook
 //
 //  Created by Mac on 12/09/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddIngredients: View {
+struct IngredientsAdd: View {
     @Binding var ingredient: Ingredient
     @Environment(\.dismiss) private var dismiss
     
@@ -78,5 +78,5 @@ struct AddIngredients: View {
 }
 
 #Preview {
-    AddIngredients(ingredient: .constant(Ingredient.DataIngredient.first!))
+    IngredientsAdd(ingredient: .constant(Ingredient.DataIngredient.first!))
 }
