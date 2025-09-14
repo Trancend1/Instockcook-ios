@@ -3,6 +3,8 @@ import SwiftUI
 struct FridgeMain: View {
     @StateObject private var viewModel = FridgeViewModel()
     @StateObject private var toolsViewModel = ToolsViewModel()
+    @StateObject private var recipeViewModel = RecipeViewModel()
+    
     @State private var showModal = false
     @State private var showFavorites = false
     @State private var goToRecipes = false
@@ -33,7 +35,7 @@ struct FridgeMain: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(.color1)
                     .padding(20)
-                
+                    
                 }
                 
                 // Konten
@@ -94,7 +96,7 @@ struct FridgeMain: View {
             }
             .background(Color.white)
             .navigationTitle("My Fridge")
-//            .navigationBarTitleDisplayMode(.inline)
+            //            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
@@ -122,6 +124,7 @@ struct FridgeMain: View {
             // Modal Favorite
             .sheet(isPresented: $showFavorites) {
                 Favorite()
+                    .environmentObject(recipeViewModel)
                     .presentationDragIndicator(.visible)
             }
             // Modal Add Ingredients
@@ -135,15 +138,14 @@ struct FridgeMain: View {
                     IngredientsAdd(ingredient: $viewModel.selectedIngredients[index])
                         .presentationDetents([.medium/*, .large*/])
                         .presentationDragIndicator(.visible)
-                        
+                    
                 }
             }
             // Navigate to Recipes
             .navigationDestination(isPresented: $goToRecipes) {
-                RecipeView(
-                    recipes: Recipe.all,
-                    selectedIngredients: viewModel.selectedIngredients
-                )
+                RecipeView(recipes: $recipeViewModel.recipes,
+                           selectedIngredients: viewModel.selectedIngredients)
+                .environmentObject(recipeViewModel)
                 .navigationTitle("Recipes")
                 .navigationBarTitleDisplayMode(.inline)
             }
