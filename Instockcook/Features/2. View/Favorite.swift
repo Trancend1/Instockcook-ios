@@ -21,9 +21,9 @@ struct Favorite: View {
                                 Button(action: {
                                     recipeViewModel.toggleFavorite(for: recipe)
                                 }) {
-                                    Image(systemName: recipe.favorite ? "heart.fill" : "heart")
-                                        .foregroundColor(.red)
-                                        .padding(8)
+//                                    Image(systemName: recipe.favorite ? "heart.fill" : "heart")
+//                                        .foregroundColor(.red)
+//                                        .padding(8)
                                 }
                             }
                         }
