@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct RecipeDescription: View {
-    var recipe: Recipe
+    @Binding var recipe: Recipe
     
     var body: some View {
         NavigationView{
-            RecipeDetail(recipe: recipe)
+            RecipeDetail(recipe: $recipe)
                 .padding(20)
         }
     }

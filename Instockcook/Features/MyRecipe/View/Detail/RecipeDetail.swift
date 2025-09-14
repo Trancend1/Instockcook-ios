@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RecipeDetail: View {
-    var recipe: Recipe
+    @Binding var recipe: Recipe
     @State private var selectedTab: RecipeTab = .details
     
     var ingredients: [String] {
@@ -50,10 +50,17 @@ struct RecipeDetail: View {
                 }
                 
                 // Judul
-                Text(recipe.title)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(.color1)
+                HStack {
+                    Text(recipe.title)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.color1)
+                    Spacer()
+                    Image(systemName: recipe.favorite ? "heart.fill" : "heart")
+                        .onTapGesture {
+                            recipe.favorite.toggle()
+                        }
+                }
                 
                 // Deskripsi
                 Text(recipe.description)
@@ -128,7 +135,7 @@ struct RecipeDetail: View {
 struct RecipeDetail_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RecipeDetail(recipe: Recipe.all[0])
+            RecipeDetail(recipe: .constant(Recipe.all[0]))
         }
     }
 }
