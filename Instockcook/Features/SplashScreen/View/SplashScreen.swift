@@ -27,13 +27,13 @@ struct SplashScreenView: View {
                     }
                 }
             // Setelah splash, pindah ke onboarding atau main
-            //        .fullScreenCover(isPresented: $isActive) {
-            //            if hasSeenOnboarding {
-            //                MyFridgeView()
-            //            } else {
-            //                OnboardingView()
-            //            }
-            //        }
+                    .fullScreenCover(isPresented: $isActive) {
+                        if hasSeenOnboarding {
+                            MyFridge()
+                        } else {
+                            OnboardingView()
+                        }
+                    }
         }
     }
 }
