@@ -20,15 +20,21 @@ struct MyFridge: View {
                         .padding(20)
                     
                     Spacer()
-                    Button("Add") {
+                    Button{
                         viewModel.isPresentingFridge = true
+                    } label: {
+                        Text("Add")
+                            .padding(.horizontal,15)
+                            .padding(.vertical,5)
+                            .background(Color.gray.opacity(0.2))
+                            .cornerRadius(20)
                     }
                     .textCase(nil)
                     .fontWeight(.semibold)
                     .foregroundStyle(.color1)
                     .padding(20)
-                }
                 
+                }
                 
                 // Konten
                 if viewModel.selectedIngredients.isEmpty {

@@ -752,7 +752,7 @@ extension Recipe {
         // --- 5 resep tambahan yang sangat mudah ---
         Recipe(
             title: "Telur Balado",
-            image: "https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2023/12/28062947/Telur-Balado-Padang.jpg",
+            image: "https://vivaapotek.co.id/wp-content/uploads/2024/04/kalori-telur-balado.jpg.webp",
             description: "Telur rebus yang digoreng lalu dimasak dengan sambal balado pedas manis. Lauk sederhana yang disukai banyak orang.",
             ingredients: "5 butir telur, 10 buah cabai merah, 5 siung bawang merah, 3 siung bawang putih, 1/2 buah tomat, 1/2 sdt garam, 1/2 sdt gula, minyak goreng secukupnya.",
             tools: "Panci, wajan, cobek/blender.",
@@ -780,7 +780,7 @@ extension Recipe {
         ),
         Recipe(
             title: "Tahu Tempe Orek Kecap",
-            image: "https://www.masakapahariini.com/wp-content/uploads/2023/04/Resep-Orek-Tempe-Kecap-scaled.jpg",
+            image: "https://img-global.cpcdn.com/recipes/2769042b6ef23453/680x781f0.51595_0.5_1.0q80/orek-tahu-tempe-foto-resep-utama.jpg",
             description: "Masakan olahan tahu dan tempe yang dipotong kecil lalu ditumis dengan kecap manis hingga bumbu meresap.",
             ingredients: "1 papan tempe, 2 buah tahu, 4 siung bawang merah, 3 siung bawang putih, 5 buah cabai merah, 3 sdm kecap manis, 1/2 sdt garam, 1/4 sdt lada, 50 ml air.",
             tools: "Wajan, pisau, spatula.",
@@ -808,7 +808,7 @@ extension Recipe {
         ),
         Recipe(
             title: "Sambal Matah",
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjK80K6c-1_S7c65j9D-f7p3R2i3yv1_h9zQ&s",
+            image: "https://image.idntimes.com/post/20250526/sambal-matah-raw-chilli-onion-slices-lemongrass-511235-14035-94e6cc185ec1d10df67af56587621edc-eab398220732154ba3cdafd698fc47e8.jpg",
             description: "Sambal khas Bali yang dibuat dari bahan-bahan mentah, memberikan rasa pedas, segar, dan aroma wangi dari serai dan daun jeruk.",
             ingredients: "10 siung bawang merah, 8 buah cabai rawit, 2 batang serai, 3 lembar daun jeruk, 1/2 sdt terasi, 1/2 sdt garam, 1/4 sdt gula, 3 sdm minyak kelapa panas.",
             tools: "Pisau, mangkuk.",
