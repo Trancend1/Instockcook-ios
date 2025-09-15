@@ -26,16 +26,32 @@ extension Recipe {
                     .trimmingCharacters(in: .whitespacesAndNewlines)
                     .split(separator: " ")
                 
-                var quantity = 0
+                var quantity:Double = 0
                 var unit = ""
                 var name = ""
                 
+                if let first = parts.first {
+                    let qtyStr = String(first)
+                    
+                    if qtyStr.contains("/") {
+                        // parsing pecahan manual (contoh: "1/2")
+                        let nums = qtyStr.split(separator: "/")
+                        if nums.count == 2,
+                           let num = Double(nums[0]),
+                           let den = Double(nums[1]),
+                           den != 0 {
+                            quantity = num / den
+                        }
+                    } else {
+                        // coba langsung parse ke Double (untuk 0.5, 3, dll.)
+                        quantity = Double(qtyStr) ?? 0
+                    }
+                }
+                
                 if parts.count >= 3 {
-                    quantity = Int(parts[0]) ?? 0
                     unit = String(parts[1])
                     name = parts.dropFirst(2).joined(separator: " ")
                 } else if parts.count == 2 {
-                    quantity = Int(parts[0]) ?? 0
                     name = String(parts[1])
                 } else {
                     name = String(item).trimmingCharacters(in: .whitespacesAndNewlines)
@@ -45,18 +61,16 @@ extension Recipe {
                 if let match = Ingredient.DataIngredient.first(where: {
                     $0.name.lowercased() == name.lowercased()
                 }) {
-                    // pakai image & unit bawaan dari master
                     return Ingredient(
                         name: name,
-                        quantity: Int(Double(quantity)),
+                        quantity: quantity,
                         unit: match.unit.isEmpty ? unit : match.unit,
                         image: match.image
                     )
                 } else {
-                    // fallback default
                     return Ingredient(
                         name: name,
-                        quantity: Int(quantity),
+                        quantity: quantity,
                         unit: unit,
                         image: "🥬"
                     )
