@@ -73,7 +73,7 @@ struct RecipeDetail: View {
                 
                 // Picker
                 UnderlinePicker(selectedTab: $selectedTab)
-                                    .padding(.horizontal)
+                    .padding(.horizontal)
                 
                 Divider()
                 
@@ -103,7 +103,7 @@ struct RecipeDetail: View {
                         ForEach(recipe.parsedTools, id: \.self) { tool in
                             HStack {
                                 Image(systemName: "")
-                                    
+                                
                                 Text(tool)
                             }
                             .padding(.vertical, 5)
@@ -114,13 +114,23 @@ struct RecipeDetail: View {
                     VStack(alignment: .leading, spacing: 16) {
                         ForEach(Array(steps.enumerated()), id: \.offset) { index, step in
                             HStack(alignment: .top, spacing: 12) {
-                                Circle()
-                                    .fill(.color1)
-                                    .frame(width: 28, height: 28)
-                                    .overlay(Text("\(index+1)").foregroundColor(.white))
-                                
+                                VStack {
+                                    Circle()
+                                        .fill(.color1)
+                                        .frame(width: 28, height: 28)
+                                        .overlay(Text("\(index+1)").foregroundColor(.white))
+                                    if index < steps.count - 1 {
+                                        Rectangle()
+                                            .fill(Color.gray.opacity(0.3))
+                                            .frame(width: 2)
+                                            .padding(.vertical, -10)
+                                    }
+                                }
                                 Text(step)
                                     .multilineTextAlignment(.leading)
+                                    .padding(.top, 3)
+                                    .padding(.bottom, 4)
+                                
                             }
                         }
                     }

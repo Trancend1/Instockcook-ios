@@ -6,14 +6,18 @@
 //
 
 import Foundation
+import SwiftUICore
 
-struct Ingredient: Identifiable, Decodable {
+struct Ingredient: Identifiable{
     var id: UUID = UUID()
     var name: String
     var quantity: Int
     var unit: String
     var image: String
+    var color: Color = Color.random()
 }
+
+
 
 extension Ingredient {
     static let DataIngredient: [Ingredient] = [
@@ -82,4 +86,13 @@ extension Ingredient {
         Ingredient(name: "Paprika Kuning", quantity: 0, unit: "buah", image: "🫑"),
         Ingredient(name: "Jintan", quantity: 0, unit: "sdt", image: "🫚")
     ]
+}
+extension Color {
+    static func random() -> Color {
+        let hue = Double.random(in: 0...1)
+        let saturation = Double.random(in: 0.3...0.5)
+        let brightness = Double.random(in: 0.85...1.0)
+        return Color(hue: hue, saturation: saturation, brightness: brightness)
+            .opacity(0.3)
+    }
 }

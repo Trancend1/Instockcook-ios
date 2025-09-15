@@ -23,12 +23,13 @@ struct RecipeCard: View {
                     .frame(width: 40, height: 40)
                     .foregroundColor(.gray.opacity(0.6))
                     .frame(width: 127, height: 107)
-                    .background(Color.gray.opacity(0.2))
+                    .background(Color.gray.opacity(0.9))
                     .cornerRadius(12)
             }
             
             Text(recipe.title)
                 .font(.callout)
+                .fontWeight(.medium)
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 8)
@@ -36,9 +37,9 @@ struct RecipeCard: View {
         }
         .frame(width: 150)
         .frame(height: 175)
-        .background(Color.white)
+        .background(Color.random().opacity(0.5))
         .cornerRadius(10)
-        .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
+//        .shadow(color: .gray, radius: 5, x: 0, y: 2)
         .onTapGesture {
 //            selectedRecipe = recipe
             showDetail = true
@@ -46,7 +47,7 @@ struct RecipeCard: View {
         .sheet(isPresented: $showDetail) {
                     NavigationView {
                         RecipeDetail(recipe: $recipe)
-                            .padding(20)
+                            .padding(4)
                     }
             .presentationDragIndicator(.visible)
         }

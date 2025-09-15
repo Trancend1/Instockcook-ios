@@ -6,40 +6,28 @@ struct ToolsAdd: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                // Search bar
-                TextField("Search", text: $viewModel.searchText)
-                    .padding(10)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
-                    .padding(.horizontal)
-                
-                // List
-                List {
-                    Section(
-                        header: Text("Tools")
+            List {
+                Section(
+                    header: Text("Tools")
                         .font(.headline)
                         .foregroundStyle(Color(.color1))
                         .textCase(nil)) {
-                        ForEach(viewModel.filteredTools) { tool in
-                            HStack {
-                                Text(tool.name)
-                                Spacer()
-                                Button(action: {
-                                    viewModel.toggleSelection(for: tool)
-                                }) {
-                                    Image(systemName: tool.isSelected ? "checkmark.square.fill" : "square")
-                                        .foregroundColor(Color(.color1))
+                            ForEach(viewModel.filteredTools) { tool in
+                                HStack {
+                                    Text(tool.name)
+                                    Spacer()
+                                    Button(action: {
+                                        viewModel.toggleSelection(for: tool)
+                                    }) {
+                                        Image(systemName: tool.isSelected ? "checkmark.square.fill" : "square")
+                                            .foregroundColor(Color(.color1))
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
                                 }
-                                .buttonStyle(PlainButtonStyle())
                             }
                         }
-                    }
-                }
-                .background(Color(.white))
-                .listStyle(InsetGroupedListStyle())
             }
-            .background(Color(.white))
+            .listStyle(InsetGroupedListStyle())
             .navigationBarTitle("Add Tools", displayMode: .inline)
             .navigationBarItems(
                 leading: Button("Cancel") {
@@ -50,10 +38,8 @@ struct ToolsAdd: View {
                     isPresented = false
                 }
             )
-            .foregroundStyle(.color1)
-            .fontWeight(.semibold)
+            .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
         }
-        .background(Color(.white))
     }
 }
 
