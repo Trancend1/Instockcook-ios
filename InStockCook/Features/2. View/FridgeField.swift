@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct FridgeField: View {
-
     let pastelColors: [Color] = [
         Color(red: 0.96, green: 0.80, blue: 0.80), // pastel pink
         Color(red: 0.80, green: 0.90, blue: 0.96), // pastel blue
@@ -16,17 +15,13 @@ struct FridgeField: View {
         Color(red: 0.99, green: 0.94, blue: 0.80), // pastel yellow
         Color(red: 0.93, green: 0.82, blue: 0.96)  // pastel purple
     ]
-
     @Binding var selectedIngredients: [Ingredient]
-
     @State private var draftSelected: [Ingredient] = []
     @State private var draftAll: [Ingredient] = []
-
     @State private var editingIngredient: Ingredient?
     @State private var searchText: String = ""
-
     @Environment(\.dismiss) private var dismiss
-
+    
     var body: some View {
         NavigationStack {
             List {
@@ -48,7 +43,6 @@ struct FridgeField: View {
                     Button("Save") {
                         selectedIngredients = draftSelected
                         searchText = "" // reset \
-//                        searchText
                         dismiss()
                     }
                     .fontWeight(.semibold)
@@ -64,18 +58,18 @@ struct FridgeField: View {
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .onAppear {
                 loadDrafts()
-                searchText = "" // reset searchText ketika view muncul
+                searchText = ""
             }
         }
     }
-
+    
     @ViewBuilder
     private var selectedSection: some View {
         if !draftSelected.isEmpty {
             Section("Selected") {
                 ForEach(draftSelected.indices, id: \.self) { idx in
                     let binding = $draftSelected[idx]
-
+                    
                     IngredientsList(isFromRecipeDetail: false, ingredient: binding)
                         .listRowSeparator(.hidden)
                     
@@ -106,18 +100,15 @@ struct FridgeField: View {
             .headerProminence(.increased)
         }
     }
-
     private var allSection: some View {
         Section("Ingredients") {
             let filtered = draftAll.filter { searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText) }
-
             if filtered.isEmpty {
                 ContentUnavailableView.search(text: searchText)
             } else {
                 ForEach(draftAll.indices, id: \.self) { idx in
                     if searchText.isEmpty || draftAll[idx].name.localizedCaseInsensitiveContains(searchText) {
                         let binding = $draftAll[idx]
-
                         IngredientsList(isFromRecipeDetail: false, ingredient: binding)
                             .listRowSeparator(.hidden)
                             .onChange(of: binding.wrappedValue.quantity) { oldValue, newQuantity in
@@ -135,7 +126,6 @@ struct FridgeField: View {
         }
         .headerProminence(.increased)
     }
-
     private func loadDrafts() {
         draftSelected = selectedIngredients
         let selectedIDs = Set(draftSelected.map { $0.id })

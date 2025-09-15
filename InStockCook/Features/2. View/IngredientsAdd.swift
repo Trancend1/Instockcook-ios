@@ -13,7 +13,7 @@ struct IngredientsAdd: View {
     
     @State private var quantityString: String = ""
     @FocusState private var isQuantityFieldFocused: Bool
-    @State private var showAlert: Bool = false   // state untuk alert
+    @State private var showAlert: Bool = false
     
     var body: some View {
         NavigationView {
@@ -59,7 +59,7 @@ struct IngredientsAdd: View {
                                 print("Quantity Saved: \(ingredient.quantity)")
                                 dismiss()
                             } else {
-                                showAlert = true  // tampilkan alert kalau input bukan angka
+                                showAlert = true
                             }
                         }
                         .disabled(quantityString.isEmpty)

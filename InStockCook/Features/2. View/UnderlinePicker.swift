@@ -9,7 +9,7 @@ import SwiftUI
 
 enum RecipeTab: String, CaseIterable {
     case details = "Details"
-    case step = "Step"
+    case step = "Steps"
 }
 
 // 2) UnderlinePicker non-generic (menggunakan RecipeTab)

@@ -2,7 +2,7 @@
 import SwiftUI
 
 @main
-struct InstockcookApp: App {
+struct InStockCookApp: App {
     
     var body: some Scene {
         WindowGroup {

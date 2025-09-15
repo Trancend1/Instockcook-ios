@@ -13,13 +13,13 @@ struct SplashScreen: View {
     
     var body: some View {
         ZStack {
-                        LinearGradient(
-                            gradient: Gradient(colors: [.backgroundTop, .backgroundMiddle, .backgroundBottom]),
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                        .edgesIgnoringSafeArea(.all)
-                .ignoresSafeArea()
+            LinearGradient(
+                gradient: Gradient(colors: [.backgroundTop, .backgroundMiddle, .backgroundBottom]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .edgesIgnoringSafeArea(.all)
+            .ignoresSafeArea()
             Image("splash")
                 .resizable()
                 .scaledToFit()
@@ -32,13 +32,13 @@ struct SplashScreen: View {
                     }
                 }
             // Setelah splash, pindah ke onboarding atau main
-                    .fullScreenCover(isPresented: $isActive) {
-                        if hasSeenOnboarding {
-                            FridgeMain()
-                        } else {
-                            OnboardingView()
-                        }
+                .fullScreenCover(isPresented: $isActive) {
+                    if hasSeenOnboarding {
+                        FridgeMain()
+                    } else {
+                        OnboardingView()
                     }
+                }
         }
     }
 }

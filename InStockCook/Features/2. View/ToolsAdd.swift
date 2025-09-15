@@ -32,11 +32,15 @@ struct ToolsAdd: View {
             .navigationBarItems(
                 leading: Button("Cancel") {
                     isPresented = false
-                },
+                }
+                    .tint(.color1)
+                    .fontWeight(.semibold),
                 trailing: Button("Save") {
                     print("Selected tools: \(viewModel.tools.filter { $0.isSelected }.map { $0.name })")
                     isPresented = false
                 }
+                    .tint(.color1)
+                    .fontWeight(.semibold)
             )
             .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
         }
