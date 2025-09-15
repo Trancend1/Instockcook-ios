@@ -9,7 +9,11 @@ struct IngredientsList: View {
         VStack{
             HStack {
                 RoundedRectangle(cornerRadius: 6)
+<<<<<<< HEAD
                     .fill(ingredient.color)
+=======
+                    .fill(Color(.systemGray6))
+>>>>>>> 8c4871e (splash screen)
                     .frame(width: 32, height: 32)
                     .overlay(Text(ingredient.image).font(.system(size: 20)))
                 
@@ -36,10 +40,16 @@ struct IngredientsList: View {
             }
             Rectangle()
                 .frame(height: 1)
+<<<<<<< HEAD
                 .foregroundStyle(Color.gray.opacity(0.2))
         }
         
         .padding(.vertical, 4)
+=======
+                .foregroundColor(Color.gray.opacity(0.2))
+        }
+        .padding(.vertical,-3)
+>>>>>>> 8c4871e (splash screen)
         .contentShape(Rectangle())
         .onTapGesture {
             if !isFromRecipeDetail {

@@ -13,7 +13,12 @@ struct SplashScreen: View {
     
     var body: some View {
         ZStack {
-            Color(.screen)
+                        LinearGradient(
+                            gradient: Gradient(colors: [.backgroundTop, .backgroundMiddle, .backgroundBottom]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                        .edgesIgnoringSafeArea(.all)
                 .ignoresSafeArea()
             Image("splash")
                 .resizable()

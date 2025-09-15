@@ -4,11 +4,19 @@ struct OnboardingView: View {
     @AppStorage("hasSeenOnboarding") var hasSeenOnboarding: Bool = false
     
     var body: some View {
-
+        ZStack {
+            LinearGradient(
+                gradient: Gradient(colors: [.backgroundTop, .backgroundMiddle, .backgroundBottom]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .edgesIgnoringSafeArea(.all)
+            
+            
             VStack {
                 Spacer()
                 
-                Image("boarding")
+                Image("awal1")
                     .resizable()
                     .scaledToFit()
                     .frame(height: 250)
@@ -36,14 +44,14 @@ struct OnboardingView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color("color1"))
+                        .background(Color.brandOrange)
                         .cornerRadius(16)
                         .padding(.horizontal, 24)
                 }
             }
             .padding()
         }
-    
+    }
 }
 
 #Preview {

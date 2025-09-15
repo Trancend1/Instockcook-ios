@@ -80,7 +80,7 @@ struct FridgeField: View {
                         .listRowSeparator(.hidden)
                     
                         .onTapGesture { editingIngredient = binding.wrappedValue }
-                        .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button(role: .destructive) {
                                 if let removeIndex = draftSelected.firstIndex(where: { $0.id == binding.wrappedValue.id }) {
                                     var removed = draftSelected.remove(at: removeIndex)
