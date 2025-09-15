@@ -24,16 +24,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0470A6792E71687B0055C62D /* Instockcook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instockcook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0470A6792E71687B0055C62D /* InStockCook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InStockCook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0470A6862E71687C0055C62D /* InstockcookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstockcookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0470A6902E71687C0055C62D /* InstockcookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstockcookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0470A6B62E716A020055C62D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0470A67B2E71687B0055C62D /* Instockcook */ = {
+		0470A67B2E71687B0055C62D /* InStockCook */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Instockcook;
+			path = InStockCook;
 			sourceTree = "<group>";
 		};
 		0470A6892E71687C0055C62D /* InstockcookTests */ = {
@@ -77,7 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				0470A6B62E716A020055C62D /* Info.plist */,
-				0470A67B2E71687B0055C62D /* Instockcook */,
+				0470A67B2E71687B0055C62D /* InStockCook */,
 				0470A6892E71687C0055C62D /* InstockcookTests */,
 				0470A6932E71687C0055C62D /* InstockcookUITests */,
 				0470A67A2E71687B0055C62D /* Products */,
@@ -87,7 +87,7 @@
 		0470A67A2E71687B0055C62D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0470A6792E71687B0055C62D /* Instockcook.app */,
+				0470A6792E71687B0055C62D /* InStockCook.app */,
 				0470A6862E71687C0055C62D /* InstockcookTests.xctest */,
 				0470A6902E71687C0055C62D /* InstockcookUITests.xctest */,
 			);
@@ -97,9 +97,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0470A6782E71687B0055C62D /* Instockcook */ = {
+		0470A6782E71687B0055C62D /* InStockCook */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0470A69A2E71687C0055C62D /* Build configuration list for PBXNativeTarget "Instockcook" */;
+			buildConfigurationList = 0470A69A2E71687C0055C62D /* Build configuration list for PBXNativeTarget "InStockCook" */;
 			buildPhases = (
 				0470A6752E71687B0055C62D /* Sources */,
 				0470A6762E71687B0055C62D /* Frameworks */,
@@ -110,13 +110,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				0470A67B2E71687B0055C62D /* Instockcook */,
+				0470A67B2E71687B0055C62D /* InStockCook */,
 			);
-			name = Instockcook;
+			name = InStockCook;
 			packageProductDependencies = (
 			);
 			productName = Instockcook;
-			productReference = 0470A6792E71687B0055C62D /* Instockcook.app */;
+			productReference = 0470A6792E71687B0055C62D /* InStockCook.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0470A6852E71687C0055C62D /* InstockcookTests */ = {
@@ -202,7 +202,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0470A6782E71687B0055C62D /* Instockcook */,
+				0470A6782E71687B0055C62D /* InStockCook */,
 				0470A6852E71687C0055C62D /* InstockcookTests */,
 				0470A68F2E71687C0055C62D /* InstockcookUITests */,
 			);
@@ -260,12 +260,12 @@
 /* Begin PBXTargetDependency section */
 		0470A6882E71687C0055C62D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0470A6782E71687B0055C62D /* Instockcook */;
+			target = 0470A6782E71687B0055C62D /* InStockCook */;
 			targetProxy = 0470A6872E71687C0055C62D /* PBXContainerItemProxy */;
 		};
 		0470A6922E71687C0055C62D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0470A6782E71687B0055C62D /* Instockcook */;
+			target = 0470A6782E71687B0055C62D /* InStockCook */;
 			targetProxy = 0470A6912E71687C0055C62D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -399,6 +399,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3GD8A9K534;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -412,7 +413,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.team5.Instockcook;
+				PRODUCT_BUNDLE_IDENTIFIER = com.miftafauzia.Instockcook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -427,6 +428,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3GD8A9K534;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -440,7 +442,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.team5.Instockcook;
+				PRODUCT_BUNDLE_IDENTIFIER = com.miftafauzia.Instockcook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -528,7 +530,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0470A69A2E71687C0055C62D /* Build configuration list for PBXNativeTarget "Instockcook" */ = {
+		0470A69A2E71687C0055C62D /* Build configuration list for PBXNativeTarget "InStockCook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0470A69B2E71687C0055C62D /* Debug */,
