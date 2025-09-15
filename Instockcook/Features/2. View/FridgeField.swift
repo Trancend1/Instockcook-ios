@@ -9,6 +9,14 @@ import SwiftUI
 
 struct FridgeField: View {
 
+    let pastelColors: [Color] = [
+        Color(red: 0.96, green: 0.80, blue: 0.80), // pastel pink
+        Color(red: 0.80, green: 0.90, blue: 0.96), // pastel blue
+        Color(red: 0.82, green: 0.94, blue: 0.84), // pastel green
+        Color(red: 0.99, green: 0.94, blue: 0.80), // pastel yellow
+        Color(red: 0.93, green: 0.82, blue: 0.96)  // pastel purple
+    ]
+
     @Binding var selectedIngredients: [Ingredient]
 
     @State private var draftSelected: [Ingredient] = []
@@ -70,6 +78,7 @@ struct FridgeField: View {
 
                     IngredientsList(isFromRecipeDetail: false, ingredient: binding)
                         .listRowSeparator(.hidden)
+                    
                         .onTapGesture { editingIngredient = binding.wrappedValue }
                         .swipeActions(edge: .leading, allowsFullSwipe: false) {
                             Button(role: .destructive) {

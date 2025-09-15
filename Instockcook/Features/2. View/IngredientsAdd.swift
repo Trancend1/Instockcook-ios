@@ -13,6 +13,7 @@ struct IngredientsAdd: View {
     
     @State private var quantityString: String = ""
     @FocusState private var isQuantityFieldFocused: Bool
+    @State private var showAlert: Bool = false   // state untuk alert
     
     var body: some View {
         NavigationView {
@@ -54,10 +55,12 @@ struct IngredientsAdd: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button("Save") {
                             if let newQuantity = Int(quantityString), newQuantity > 0 {
-                                ingredient.quantity = Int(newQuantity)
+                                ingredient.quantity = newQuantity
                                 print("Quantity Saved: \(ingredient.quantity)")
+                                dismiss()
+                            } else {
+                                showAlert = true  // tampilkan alert kalau input bukan angka
                             }
-                            dismiss()
                         }
                         .disabled(quantityString.isEmpty)
                         .tint(.color1)
@@ -71,6 +74,11 @@ struct IngredientsAdd: View {
                         self.quantityString = ""
                     }
                     isQuantityFieldFocused = true
+                }
+                .alert("Input tidak valid", isPresented: $showAlert) {
+                    Button("OK", role: .cancel) {}
+                } message: {
+                    Text("Masukan Angka yang benar!")
                 }
             }
         }

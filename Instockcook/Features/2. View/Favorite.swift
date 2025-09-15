@@ -44,11 +44,11 @@ struct Favorite: View {
                                         Button(action: {
                                             recipeViewModel.toggleFavorite(for: recipe)
                                         }) {
-                                            // kalau mau tombol remove dari fav
-                                            Image(systemName: "xmark.circle.fill")
-                                                .foregroundColor(.red.opacity(0.8))
-                                                .font(.title2)
-                                                .padding(6)
+//                                            // kalau mau tombol remove dari fav
+//                                            Image(systemName: "xmark.circle.fill")
+//                                                .foregroundColor(.red.opacity(0.8))
+//                                                .font(.title2)
+//                                                .padding(6)
                                         }
                                     }
                                 }

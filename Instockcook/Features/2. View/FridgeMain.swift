@@ -26,14 +26,15 @@ struct FridgeMain: View {
                         viewModel.isPresentingFridge = true
                     } label: {
                         Text("Add")
+                            .fontWeight(.bold)
                             .padding(.horizontal,15)
                             .padding(.vertical,5)
-                            .background(Color.gray.opacity(0.2))
+                            .foregroundStyle(.color2)
+                            .background(Color.color2.opacity(0.2))
                             .cornerRadius(20)
                     }
                     .textCase(nil)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.color1)
+                    .fontWeight(.bold)
                     .padding(20)
                     
                 }
@@ -107,13 +108,16 @@ struct FridgeMain: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(.color1)
                     
+                    
                     Button {
                         showFavorites = true
                     } label: {
                         Image(systemName: "heart")
-                    }
+                                                }
                     .fontWeight(.bold)
                     .foregroundStyle(.color1)
+                    .padding(.trailing,10)
+                    
                 }
             }
             // Modal Add Tools

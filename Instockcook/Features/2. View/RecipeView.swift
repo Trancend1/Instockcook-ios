@@ -27,7 +27,7 @@ struct RecipeView: View {
                     Text("Tidak ada resep yang cocok 😢")
                         .padding()
                 } else {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 160), spacing: 15)], spacing: 15) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 160), spacing: -25)], spacing: 15) {
 //                        ForEach(Array(filteredRecipes.enumerated()), id: \.element.id) { _, recipe in
 //                                if let index = recipes.firstIndex(where: { $0.id == recipe.id }) {
 //                                    RecipeCard(recipe: $recipes[index])
