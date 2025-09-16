@@ -69,7 +69,12 @@ struct IngredientsAdd: View {
                 }
                 .onAppear {
                     if ingredient.quantity > 0 {
-                        self.quantityString = "\(ingredient.quantity)"
+                        
+                        if ingredient.quantity.truncatingRemainder(dividingBy: 1) == 0 {
+                            self.quantityString = String(format: "%.0f", ingredient.quantity)
+                        } else {
+                            self.quantityString = "\(ingredient.quantity)"
+                        }
                     } else {
                         self.quantityString = ""
                     }

@@ -67,6 +67,7 @@ struct FridgeMain: View {
                                         viewModel.deleteIngredient(ingredient)
                                     } label: {
                                         Label("Delete", systemImage: "trash")
+                                            .background(.red)
                                     }
                                 }
                         }
@@ -155,7 +156,7 @@ struct FridgeMain: View {
                 
             }
         }
-        .tint(.color1)
+//        .tint(.color1)
         .fontWeight(.semibold)
     }
 }
