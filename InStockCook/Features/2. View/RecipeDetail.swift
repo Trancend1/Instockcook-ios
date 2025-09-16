@@ -106,7 +106,8 @@ struct RecipeDetail: View {
                                 
                                 Text(tool)
                             }
-                            .padding(.vertical, 5)
+                            Divider()
+                            .padding(.vertical, 10)
                         }
                     }
                     .padding(.top, 8)

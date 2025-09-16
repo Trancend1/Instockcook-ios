@@ -11,7 +11,7 @@ import SwiftUICore
 struct Ingredient: Identifiable{
     var id: UUID = UUID()
     var name: String
-    var quantity: Int
+    var quantity: Double
     var unit: String
     var image: String
     var color: Color = Color.random()
@@ -94,5 +94,14 @@ extension Color {
         let brightness = Double.random(in: 0.85...1.0)
         return Color(hue: hue, saturation: saturation, brightness: brightness)
             .opacity(0.3)
+    }
+}
+extension Double {
+    var fixQty: String {
+        if self.truncatingRemainder(dividingBy: 1) == 0 {
+            return String(format: "%.0f", self)
+        } else {
+            return String(format: "%.1f", self)
+        }
     }
 }

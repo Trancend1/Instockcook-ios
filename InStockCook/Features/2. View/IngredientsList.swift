@@ -17,7 +17,7 @@ struct IngredientsList: View {
                     .fontWeight(.medium)
                 Spacer()
                 if ingredient.quantity > 0 {
-                    Text("\(ingredient.quantity) \(ingredient.unit)")
+                    Text("\(ingredient.quantity.fixQty) \(ingredient.unit)")
                         .foregroundColor(.color1)
                         .font(.subheadline)
                         .padding(.horizontal, 6)
