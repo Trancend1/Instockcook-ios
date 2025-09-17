@@ -30,17 +30,9 @@ struct Favorite: View {
                 } else {
                     ScrollView {
                         LazyVGrid(columns: columns, spacing: 16) {
-                            ForEach(Array(recipeViewModel.recipes.enumerated()), id: \.element.id) { index, recipe in
-                                if recipe.favorite {
-                                    ZStack(alignment: .topTrailing) {
-                                        RecipeCard(recipe: $recipeViewModel.recipes[index])
-                                        
-                                        Button(action: {
-                                            recipeViewModel.toggleFavorite(for: recipe)
-                                        }) {
-                                        }
-                                    }
-                                }
+                            ForEach(Array(recipeViewModel.recipes.enumerated())
+                                        .filter { $0.element.favorite }, id: \.element.id) { index, recipe in
+                                RecipeCard(recipe: $recipeViewModel.recipes[index])
                             }
                         }
                         .padding()

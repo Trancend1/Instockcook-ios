@@ -33,11 +33,11 @@ final class RecipeViewModel: ObservableObject {
     }
 
     func toggleFavorite(for recipe: Recipe) {
-        if let idx = recipes.firstIndex(where: { $0.id == recipe.id }) {
-            recipes[idx].favorite.toggle()
-            saveRecipes()
+            if let index = recipes.firstIndex(where: { $0.id == recipe.id }) {
+                recipes[index].favorite.toggle()
+            }
         }
-    }
+
 
     func setFavorite(_ isFav: Bool, for recipe: Recipe) {
         if let idx = recipes.firstIndex(where: { $0.id == recipe.id }) {

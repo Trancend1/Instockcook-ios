@@ -45,10 +45,10 @@ struct RecipeCard: View {
             showDetail = true
         }
         .sheet(isPresented: $showDetail) {
-                    NavigationView {
-                        RecipeDetail(recipe: $recipe)
-                            .padding(4)
-                    }
+            NavigationView {
+                RecipeDetail(recipe: $recipe)
+                    .padding(4)
+            }
             .presentationDragIndicator(.visible)
         }
     }

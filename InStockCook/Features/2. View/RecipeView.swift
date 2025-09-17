@@ -13,8 +13,11 @@ struct RecipeView: View {
             } else {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 160), spacing: 15)], spacing: 15) {
                     ForEach(recipeViewModel.filteredRecipes, id: \.id) { recipe in
-                        RecipeCard(recipe: .constant(recipe))
+                        if let index = recipeViewModel.recipes.firstIndex(where: { $0.id == recipe.id }) {
+                            RecipeCard(recipe: $recipeViewModel.recipes[index]) 
+                        }
                     }
+
                 }
                 .padding(.horizontal, 25)
             }

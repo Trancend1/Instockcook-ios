@@ -57,13 +57,15 @@ struct RecipeDetail: View {
                         .foregroundColor(.color1)
                     
                     Spacer()
-                    Image(systemName: recipe.favorite ? "heart.fill" : "heart")
-                        .onTapGesture {
-                            recipe.favorite.toggle()
-                        }
-                        .font(.system(size: 25))
-                        .fontWeight(.bold)
-                        .foregroundStyle(.color1)
+                    Button(action: {
+                        recipe.favorite.toggle()
+                    }) {
+                        Image(systemName: recipe.favorite ? "heart.fill" : "heart")
+                            .font(.system(size: 25))
+                            .fontWeight(.bold)
+                            .foregroundStyle(.color1)
+                    }
+                    .buttonStyle(.plain)
                 }
                 
                 // Deskripsi
