@@ -83,10 +83,12 @@ struct RecipeDetail: View {
                         HStack {
                             Text("Ingredients")
                                 .font(.title3.bold())
+                                .foregroundColor(Color.color1)
+                                .padding(.bottom, 15)
                         }
                         
                         ForEach(recipe.parsedIngredients) { ingredient in
-                            IngredientsList(isFromRecipeDetail: true, ingredient: .constant(ingredient))
+                            IngredientsList(ingredient: ingredient, isFromRecipeDetail: true)
                         }
                         Spacer()
                         HStack {

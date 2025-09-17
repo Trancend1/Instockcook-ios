@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct FridgeMain: View {
-    @StateObject private var viewModel = FridgeViewModel()
+    @StateObject private var viewModel = FridgeViewModel.shared
     @StateObject private var toolsViewModel = ToolsViewModel()
     @StateObject private var recipeViewModel = RecipeViewModel()
     
@@ -12,34 +12,32 @@ struct FridgeMain: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .center, spacing: 0) {
+                
                 // Header
                 HStack(alignment: .top) {
                     Text("Ingredients")
-                        .textCase(nil)
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundColor(.color1)
-                        .padding(20)
+                        .padding(32)
                     
                     Spacer()
-                    Button{
+                    
+                    Button {
                         viewModel.isPresentingFridge = true
                     } label: {
                         Text("Add")
                             .fontWeight(.bold)
-                            .padding(.horizontal,15)
-                            .padding(.vertical,5)
+                            .padding(.horizontal, 15)
+                            .padding(.vertical, 5)
                             .foregroundStyle(.color1)
                             .background(Color.color1.opacity(0.2))
                             .cornerRadius(20)
                     }
-                    .textCase(nil)
-                    .fontWeight(.bold)
-                    .padding(20)
-                    
+                    .padding(32)
                 }
                 
-                // Konten
+                // Content
                 if viewModel.selectedIngredients.isEmpty {
                     Spacer()
                     VStack {
@@ -56,24 +54,29 @@ struct FridgeMain: View {
                     Spacer()
                 } else {
                     List {
-                        ForEach($viewModel.selectedIngredients) { $ingredient in
-                            IngredientsList(ingredient: $ingredient)
+                        ForEach(viewModel.selectedIngredients.indices, id: \.self) { index in
+                            // Use Binding to allow direct updates
+                            IngredientsList(ingredient: $viewModel.selectedIngredients[index])
                                 .listRowSeparator(.hidden)
-                                .onTapGesture {
-                                    viewModel.editingIngredient = ingredient
-                                }
                                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                                     Button(role: .destructive) {
-                                        viewModel.deleteIngredient(ingredient)
+                                        withAnimation {
+                                            let ingredientToDelete = viewModel.selectedIngredients[index]
+                                            viewModel.deleteIngredient(ingredientToDelete)
+                                        }
                                     } label: {
                                         Label("Delete", systemImage: "trash")
-                                            .background(.red)
                                     }
                                 }
                         }
                     }
                     .padding(EdgeInsets(top: -30, leading: -10, bottom: 0, trailing: -10))
                     .scrollContentBackground(.hidden)
+                    .refreshable {
+                        // Pull to refresh - reload data from UserDefaults
+                        viewModel.reloadFromStorage()
+                        viewModel.debugPrint()
+                    }
                 }
                 
                 // Generate Button
@@ -98,7 +101,6 @@ struct FridgeMain: View {
             }
             .background(Color.white)
             .navigationTitle("My Fridge")
-            //            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
@@ -106,61 +108,64 @@ struct FridgeMain: View {
                     } label: {
                         Image(systemName: "frying.pan")
                     }
-                    .fontWeight(.bold)
                     .foregroundStyle(.color1)
-                    
                     
                     Button {
                         showFavorites = true
                     } label: {
                         Image(systemName: "heart")
                     }
-                    .fontWeight(.heavy)
                     .foregroundStyle(.color1)
-                    .padding(.trailing,10)
-                    
+                    .padding(.trailing, 10)
                 }
+               
             }
-            // Modal Add Tools
+            
+            // MARK: - Sheets & Navigation
             .sheet(isPresented: $showModal) {
-                ToolsAdd(viewModel: toolsViewModel, isPresented: $showModal)
+                ToolsAdd(isPresented: $showModal)
                     .presentationDragIndicator(.visible)
             }
-            // Modal Favorite
             .sheet(isPresented: $showFavorites) {
                 Favorite()
                     .environmentObject(recipeViewModel)
                     .presentationDragIndicator(.visible)
             }
-            // Modal Add Ingredients
             .sheet(isPresented: $viewModel.isPresentingFridge) {
                 FridgeField(selectedIngredients: $viewModel.selectedIngredients)
+                    .environmentObject(viewModel)
                     .presentationDragIndicator(.visible)
             }
-            // Modal Edit Quantity
-            .sheet(item: $viewModel.editingIngredient) { ingredient in
-                if let index = viewModel.selectedIngredients.firstIndex(where: { $0.id == ingredient.id }) {
-                    IngredientsAdd(ingredient: $viewModel.selectedIngredients[index])
-                        .presentationDetents([.medium/*, .large*/])
-                        .presentationDragIndicator(.visible)
-                    
-                }
-            }
-            // Navigate to Recipes
             .navigationDestination(isPresented: $goToRecipes) {
-                RecipeView(recipes: $recipeViewModel.recipes,
-                           selectedIngredients: viewModel.selectedIngredients)
-                .environmentObject(recipeViewModel)
-                .navigationTitle("Recipes")
-                .navigationBarTitleDisplayMode(.inline)
-                
+                RecipeView() // Tidak perlu lagi meneruskan resep via binding
+                    .environmentObject(recipeViewModel)
+                    .navigationTitle("Recipes")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .accentColor(.color1)
+                    // Panggil fungsi saat view muncul
+                    .onAppear {
+                        recipeViewModel.filterAndSortRecipes(
+                            ingredients: viewModel.selectedIngredients,
+                            tools: toolsViewModel.selectedTools
+                        )
+                    }
             }
         }
-//        .tint(.color1)
         .fontWeight(.semibold)
+        .environmentObject(viewModel)
+        .environmentObject(toolsViewModel)
+        .environmentObject(recipeViewModel)
+        .onAppear {
+            
+            viewModel.reloadFromStorage()
+            print("🔄 FridgeMain appeared, current ingredients: \(viewModel.selectedIngredients.count)")
+            viewModel.debugPrint()
+        }
+        .tint(.color1)
     }
 }
 
 #Preview {
     FridgeMain()
+        .environmentObject(FridgeViewModel.shared)
 }

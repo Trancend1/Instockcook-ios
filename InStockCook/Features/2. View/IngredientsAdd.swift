@@ -1,10 +1,3 @@
-//
-//  IngredientsAdd.swift
-//  Instockcook
-//
-//  Created by Mac on 12/09/25.
-//
-
 import SwiftUI
 
 struct IngredientsAdd: View {
@@ -17,79 +10,111 @@ struct IngredientsAdd: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                Form {
-                    Section {
-                        HStack {
-                            Text("Nama Bahan")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Text(ingredient.name)
-                                .foregroundColor(.primary)
-                        }
-                        
-                        HStack {
-                            Text("Quantity (\(ingredient.unit))")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            TextField("Masukkan kuantitas", text: $quantityString)
-                                .multilineTextAlignment(.trailing)
-                                .keyboardType(.numberPad)
-                                .focused($isQuantityFieldFocused)
-                                .foregroundColor(.primary)
-                        }
-                    }
-                }
-                
-                .navigationTitle(ingredient.quantity > 0 ? "Edit Quantity" : "Add Quantity")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button("Cancel") {
-                            dismiss()
-                        }
-                        .tint(.color1)
-                        .fontWeight(.semibold)
+            Form {
+                Section {
+                    HStack {
+                        Text("Nama Bahan")
+                        Spacer()
+                        Text(ingredient.name)
+                            .foregroundColor(.secondary)
                     }
                     
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Save") {
-                            if let newQuantity = Int(quantityString), newQuantity > 0 {
-                                ingredient.quantity = Double(newQuantity)
-                                print("Quantity Saved: \(ingredient.quantity)")
-                                dismiss()
-                            } else {
-                                showAlert = true
-                            }
-                        }
-                        .disabled(quantityString.isEmpty)
-                        .tint(.color1)
-                        .fontWeight(.semibold)
+                    HStack {
+                        Text("Quantity (\(ingredient.unit))")
+                        Spacer()
+                        TextField("0", text: $quantityString)
+                            .multilineTextAlignment(.trailing)
+                            .keyboardType(.decimalPad)
+                            .focused($isQuantityFieldFocused)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .frame(width: 100)
                     }
-                }
-                .onAppear {
-                    if ingredient.quantity > 0 {
-                        
-                        if ingredient.quantity.truncatingRemainder(dividingBy: 1) == 0 {
-                            self.quantityString = String(format: "%.0f", ingredient.quantity)
-                        } else {
-                            self.quantityString = "\(ingredient.quantity)"
-                        }
-                    } else {
-                        self.quantityString = ""
-                    }
-                    isQuantityFieldFocused = true
-                }
-                .alert("Input tidak valid", isPresented: $showAlert) {
-                    Button("OK", role: .cancel) {}
-                } message: {
-                    Text("Masukan Angka yang benar!")
+                } header: {
+                    Text("Ingredient Details")
+                } footer: {
+                    Text("Enter the quantity you have available")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
                 }
             }
+            .navigationTitle(ingredient.quantity > 0 ? "Edit Quantity" : "Add Quantity")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                    .foregroundStyle(.color1)
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                        saveQuantity()
+                    }
+                    .disabled(!isValidInput())
+                    .foregroundStyle(isValidInput() ? .color1 : .gray)
+                }
+            }
+            .onAppear {
+                setupInitialQuantity()
+            }
+            .alert("Invalid Input", isPresented: $showAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("Please enter a valid number greater than 0")
+            }
         }
+    }
+    
+    private func setupInitialQuantity() {
+        if ingredient.quantity > 0 {
+            quantityString = ingredient.quantity.fixQty
+        } else {
+            quantityString = ""
+        }
+        
+        // Focus on text field after a small delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            isQuantityFieldFocused = true
+        }
+    }
+    
+    private func isValidInput() -> Bool {
+        guard let quantity = Double(quantityString.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+            return false
+        }
+        return quantity > 0
+    }
+    
+    private func saveQuantity() {
+        let trimmedString = quantityString.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let newQuantity = Double(trimmedString), newQuantity > 0 else {
+            showAlert = true
+            return
+        }
+        
+        // Update the binding directly
+        ingredient.quantity = newQuantity
+        print("💾 Updated \(ingredient.name) quantity to: \(newQuantity)")
+        
+        dismiss()
     }
 }
 
 #Preview {
-    IngredientsAdd(ingredient: .constant(Ingredient.DataIngredient.first!))
+    PreviewWrapper()
 }
+
+struct PreviewWrapper: View {
+    @State private var sampleIngredient = Ingredient(
+        name: "Beras",
+        quantity: 0,
+        unit: "gr",
+        image: "🌾"
+    )
+
+    var body: some View {
+        IngredientsAdd(ingredient: $sampleIngredient)
+    }
+}
+
