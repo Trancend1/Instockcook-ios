@@ -1,8 +1,6 @@
 # InStockCook
-
 <p align="center">
-  <img src="![Instockcook-logo](https://github.com/user-attachments/assets/5260cf58-7743-4fef-ac07-4c69186bcfb0)
-" alt="App Icon" width="150"/>
+  <img src="https://github.com/user-attachments/assets/5260cf58-7743-4fef-ac07-4c69186bcfb0" alt="Instockcook Logo" width="150"/>
 </p>
 
 Aplikasi InStockCook adalah solusi inovatif untuk mengatasi tantangan memasak yang sering dihadapi mahasiswa, khususnya mereka yang tinggal di kos. Aplikasi ini dirancang untuk mengubah bahan makanan yang ada di lemari es menjadi hidangan lezat dan praktis. InStockCook dikembangkan sebagai bagian dari proyek **Apple Foundation Program Batch 4, 2025**.
