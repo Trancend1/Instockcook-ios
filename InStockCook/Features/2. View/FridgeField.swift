@@ -13,7 +13,15 @@ struct FridgeField: View {
         Color(red: 0.80, green: 0.90, blue: 0.96), // pastel blue
         Color(red: 0.82, green: 0.94, blue: 0.84), // pastel green
         Color(red: 0.99, green: 0.94, blue: 0.80), // pastel yellow
-        Color(red: 0.93, green: 0.82, blue: 0.96)  // pastel purple
+        Color(red: 0.93, green: 0.82, blue: 0.96), // pastel purple
+        Color(red: 0.95, green: 0.87, blue: 0.80), // pastel peach
+        Color(red: 0.88, green: 0.92, blue: 0.76), // pastel lime
+        Color(red: 0.84, green: 0.84, blue: 0.96), // pastel lavender blue
+        Color(red: 0.96, green: 0.84, blue: 0.88), // pastel rose
+        Color(red: 0.78, green: 0.92, blue: 0.90), // pastel aqua
+        Color(red: 0.90, green: 0.88, blue: 0.96), // pastel lilac
+        Color(red: 0.98, green: 0.88, blue: 0.76), // pastel apricot
+        Color(red: 0.86, green: 0.95, blue: 0.86)  // pastel mint
     ]
     @Binding var selectedIngredients: [Ingredient]
     @State private var draftSelected: [Ingredient] = []
@@ -32,11 +40,18 @@ struct FridgeField: View {
             .background(Color.white)
             .navigationTitle("Add Ingredients")
             .navigationBarTitleDisplayMode(.inline)
+            
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") { dismiss() }
                         .foregroundStyle(.color1)
                         .fontWeight(.semibold)
+                        .padding()
+                    
+                }
+                ToolbarItem(placement: .principal) {
+                    Text("Add Ingredients")
+                        .font(.system(size: 20, weight: .medium))
                     
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -48,18 +63,27 @@ struct FridgeField: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(draftSelected.isEmpty ? .gray : .color1)
                     .disabled(draftSelected.isEmpty)
+                    .padding()
+                    
                 }
+                
             }
             .sheet(item: $editingIngredient) { ingredient in
                 if let idx = draftSelected.firstIndex(where: { $0.id == ingredient.id }) {
                     IngredientsAdd(ingredient: $draftSelected[idx])
                 }
             }
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always),prompt: Text("Search ingredients...")
+                .foregroundColor(.gray))
             .onAppear {
                 loadDrafts()
                 searchText = ""
+                let textFieldAppearance = UISearchTextField.appearance()
+                textFieldAppearance.backgroundColor = UIColor(Color.clear)
+                    textFieldAppearance.textColor = UIColor.darkGray
+                    textFieldAppearance.tintColor = UIColor.systemGreen
             }
+            
         }
     }
     
@@ -132,5 +156,19 @@ struct FridgeField: View {
         draftAll = Ingredient.DataIngredient.filter { !selectedIDs.contains($0.id) }
         draftAll.sort { $0.name < $1.name }
         draftSelected.sort { $0.name < $1.name }
+    }
+}
+
+struct FridgeField_Previews: PreviewProvider {
+    static var previews: some View {
+        // Sample data for ingredients that are already selected
+        @State var selectedIngredients: [Ingredient] = [
+            Ingredient(name: "Telur Ayam", quantity: 6, unit: "pcs", image: "🥚"),
+            Ingredient(name: "Ayam Paha", quantity: 500, unit: "gr", image: "🍗")
+        ]
+        
+        NavigationStack {
+            FridgeField(selectedIngredients: $selectedIngredients)
+        }
     }
 }

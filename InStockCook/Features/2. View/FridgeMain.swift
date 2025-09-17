@@ -106,7 +106,7 @@ struct FridgeMain: View {
                     } label: {
                         Image(systemName: "frying.pan")
                     }
-                    .fontWeight(.semibold)
+                    .fontWeight(.bold)
                     .foregroundStyle(.color1)
                     
                     
@@ -115,7 +115,7 @@ struct FridgeMain: View {
                     } label: {
                         Image(systemName: "heart")
                     }
-                    .fontWeight(.bold)
+                    .fontWeight(.heavy)
                     .foregroundStyle(.color1)
                     .padding(.trailing,10)
                     
