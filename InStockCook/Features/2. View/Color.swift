@@ -2,29 +2,29 @@ import SwiftUI
 
 extension Color {
     // MARK: - Background Gradient
-    static let backgroundTop = Color(hex: "#FFE5E5")     // Soft Peach / Blush
-    static let backgroundMiddle = Color(hex: "#FFD6C9")  // Pastel Peach
-    static let backgroundBottom = Color(hex: "#FDDDE9")  // Light Pink / Rose
+    static let backgroundTop = Color(hex: "#F0FFF0") // Hijau Pucat
+    static let backgroundMiddle = Color(hex: "#D9F2D9") // Hijau Mint
+    static let backgroundBottom = Color(hex: "#C1E0C1") // Hijau Sage
     
     // MARK: - Primary Branding
-    static let brandOrange = Color(hex: "#FF6A2C")       // Bright Orange
-    static let brandOrangeHover = Color(hex: "#FF824D")  // Softer Orange
+    static let brandPrimary = Color(hex: "#346856") // Hijau Hutan
+    static let brandSecondary = Color(hex: "#5B8D6B") // Hijau Moss
     
     // MARK: - Text Colors
-    static let textPrimary = Color(hex: "#1A1A1A")       // Almost Black
-    static let textSecondary = Color(hex: "#4D4D4D")     // Dark Gray
-    static let textMuted = Color(hex: "#9A9A9A")         // Light Gray
-    static let textWhite = Color(hex: "#FFFFFF")         // Pure White
+    static let textPrimary = Color(hex: "#1D3326") // Hijau Gelap
+    static let textSecondary = Color(hex: "#4D4D4D") // Abu-abu Gelap
+    static let textMuted = Color(hex: "#92A99E") // Abu-abu Hijau
+    static let textWhite = Color(hex: "#FFFFFF") // Putih
     
     // MARK: - Functional UI Colors
-    static let uiGreen = Color(hex: "#27AE60")           // Fresh Green (Add button)
-    static let uiBlue = Color(hex: "#2D9CDB")            // Sky Blue (Links)
-    static let uiRed = Color(hex: "#EB5757")             // Tomato Red (Warning)
+    static let uiSuccess = Color(hex: "#69A95B")// Hijau Alpukat (untuk Sukses)
+    static let uiInfo = Color(hex: "#7CA1C3")// Biru Pudar (untuk Info)
+    static let uiWarning = Color(hex: "#B55F5F") // Merah Bata (untuk Peringatan)
     
     // MARK: - Food Accent Colors
-    static let foodAvocado = Color(hex: "#7AC74F")       // Avocado Green
-    static let foodHoney = Color(hex: "#F7B500")         // Honey Yellow
-    static let foodTomato = Color(hex: "#E63946")        // Ripe Tomato Red
+    static let foodAvocado = Color(hex: "#7AC74F")//Hijau Alpukat
+    static let foodHoney = Color(hex: "#D1A600")//Kuning Mustard
+    static let foodTomato = Color(hex: "#C65353")//Merah Tomat
 }
 
 // MARK: - Hex Color Initializer

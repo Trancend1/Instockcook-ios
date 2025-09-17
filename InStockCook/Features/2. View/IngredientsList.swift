@@ -15,20 +15,23 @@ struct IngredientsList: View {
                 Text(ingredient.name)
                     .font(.body)
                     .fontWeight(.medium)
+                    .padding(.leading, 10)
                 Spacer()
                 if ingredient.quantity > 0 {
                     Text("\(ingredient.quantity.fixQty) \(ingredient.unit)")
                         .foregroundColor(.color1)
                         .font(.subheadline)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 7)
                         .background(
                             RoundedRectangle(cornerRadius: 6)
                                 .fill(Color.color1.opacity(0.15))
                         )
                 } else {
-                    Image(systemName: "square.dashed")
-                        .foregroundColor(.primary)
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(.color1)
+                        .padding(.horizontal, 13)
+                        .font(.system(size: 20, weight: .regular))
                 }
             }
             Rectangle()

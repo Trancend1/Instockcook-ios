@@ -3,49 +3,55 @@ import SwiftUI
 struct ToolsAdd: View {
     @ObservedObject var viewModel: ToolsViewModel
     @Binding var isPresented: Bool
-    
+
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
-                Section(
-                    header: Text("Tools")
-                        .font(.headline)
-                        .foregroundStyle(Color(.color1))
-                        .textCase(nil)) {
-                            ForEach(viewModel.filteredTools) { tool in
-                                HStack {
-                                    Text(tool.name)
-                                    Spacer()
-                                    Button(action: {
-                                        viewModel.toggleSelection(for: tool)
-                                    }) {
-                                        Image(systemName: tool.isSelected ? "checkmark.square.fill" : "square")
-                                            .foregroundColor(Color(.color1))
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                }
-                            }
+                Section {
+                    ForEach(viewModel.filteredTools) { tool in
+                        HStack {
+                            Text(tool.name)
+                                .font(.system(size: 18))
+                            Spacer()
+                            Image(systemName: tool.isSelected ? "checkmark.square.fill" : "square")
+                                .font(.system(size: 22))
+                                .foregroundColor(tool.isSelected ? .color1 : .secondary)
                         }
+                        .padding(.vertical,6)
+                        .padding(.horizontal, 10)
+                        .contentShape(Rectangle())
+                        .onTapGesture { viewModel.toggleSelection(for: tool) }
+                        .listRowSeparator(.visible)
+                    }
+                }
             }
-            .listStyle(InsetGroupedListStyle())
-            .navigationBarTitle("Add Tools", displayMode: .inline)
-            .navigationBarItems(
-                leading: Button("Cancel") {
-                    isPresented = false
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
+            .background(Color(UIColor.systemGroupedBackground))
+            .navigationTitle("Add Tools")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") { isPresented = false }
+                        .foregroundStyle(.color1)
+                        .fontWeight(.semibold)
+                        .padding()
                 }
-                    .tint(.color1)
-                    .fontWeight(.semibold),
-                trailing: Button("Save") {
-                    print("Selected tools: \(viewModel.tools.filter { $0.isSelected }.map { $0.name })")
-                    isPresented = false
-                }
-                    .tint(.color1)
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                        // simpan perubahan
+                        isPresented = false
+                    }
+                    .foregroundStyle(.color1)
                     .fontWeight(.semibold)
-            )
-            .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
+                    .padding()
+                }
+            }
+            .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Text("Search tools..."))
         }
     }
 }
+
 
 #Preview {
     ToolsAdd(viewModel: ToolsViewModel(), isPresented: .constant(true))
