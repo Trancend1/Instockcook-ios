@@ -26,12 +26,12 @@ struct SplashScreen: View {
                 .frame(width: 220, height: 220)
             
                 .onAppear {
-                    // Delay splash screen 2 detik
+                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         isActive = true
                     }
                 }
-            // Setelah splash, pindah ke onboarding atau main
+            
                 .fullScreenCover(isPresented: $isActive) {
                     if hasSeenOnboarding {
                         FridgeMain()

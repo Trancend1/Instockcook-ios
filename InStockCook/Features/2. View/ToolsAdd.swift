@@ -1,58 +1,50 @@
 import SwiftUI
 
 struct ToolsAdd: View {
-    @ObservedObject var viewModel: ToolsViewModel
+    @EnvironmentObject var viewModel: ToolsViewModel
     @Binding var isPresented: Bool
-
+    
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List {
                 Section {
                     ForEach(viewModel.filteredTools) { tool in
                         HStack {
                             Text(tool.name)
-                                .font(.system(size: 18))
                             Spacer()
-                            Image(systemName: tool.isSelected ? "checkmark.square.fill" : "square")
-                                .font(.system(size: 22))
-                                .foregroundColor(tool.isSelected ? .color1 : .secondary)
+                            Button(action: {
+                                viewModel.toggleSelection(for: tool)
+                            }) {
+                                Image(systemName: tool.isSelected ? "checkmark.square.fill" : "square")
+                                    .foregroundColor(Color(.color1))
+                            }
+                            .buttonStyle(PlainButtonStyle())
                         }
-                        .padding(.vertical,6)
-                        .padding(.horizontal, 10)
-                        .contentShape(Rectangle())
-                        .onTapGesture { viewModel.toggleSelection(for: tool) }
-                        .listRowSeparator(.visible)
                     }
                 }
             }
-            .listStyle(.insetGrouped)
-            .scrollContentBackground(.hidden)
-            .background(Color(UIColor.systemGroupedBackground))
-            .navigationTitle("Add Tools")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") { isPresented = false }
-                        .foregroundStyle(.color1)
-                        .fontWeight(.semibold)
-                        .padding()
+            //            .listStyle(PlainListStyle())
+            .listStyle(InsetGroupedListStyle())
+            .padding(.top, -35) // sesuaikan nilai
+            .navigationBarTitle("Add Tools", displayMode: .inline)
+            .navigationBarItems(
+                leading: Button("Cancel") {
+                    isPresented = false
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save") {
-                        // simpan perubahan
-                        isPresented = false
-                    }
-                    .foregroundStyle(.color1)
+                    .tint(.color1)
+                    .fontWeight(.semibold),
+                trailing: Button("Save") {
+                    print("Selected tools: \(viewModel.tools.filter { $0.isSelected }.map { $0.name })")
+                    isPresented = false
+                }
+                    .tint(.color1)
                     .fontWeight(.semibold)
-                    .padding()
-                }
-            }
-            .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: Text("Search tools..."))
+            )
+            .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
         }
     }
 }
-
-
 #Preview {
-    ToolsAdd(viewModel: ToolsViewModel(), isPresented: .constant(true))
+    ToolsAdd(isPresented: .constant(true))
+        .environmentObject(ToolsViewModel())
 }

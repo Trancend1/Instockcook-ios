@@ -1,23 +1,22 @@
 import SwiftUI
 
 struct ToolsList: View {
-    @ObservedObject var viewModel: ToolsViewModel
-    @State private var showModal = false
+    @EnvironmentObject var viewModel: ToolsViewModel
+    @Binding var isPresented: Bool
     
     var body: some View {
         VStack {
-            Button("Add Tools"){
-                showModal = true
+            Button("Add Tools") {
+                isPresented = true
             }
-            .sheet(isPresented: $showModal) {
-                ToolsAdd(viewModel: viewModel, isPresented: $showModal)
+            .sheet(isPresented: $isPresented) {
+                ToolsAdd(isPresented: $isPresented)
             }
         }
     }
 }
 
 #Preview {
-    ToolsList(viewModel: ToolsViewModel())
+    ToolsList(isPresented: .constant(true))
+        .environmentObject(ToolsViewModel())  
 }
-
-// Ganti Ke UI MyFridge
